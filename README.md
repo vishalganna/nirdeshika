@@ -1,2 +1,2 @@
-# nirdeshika
+# Nirdeshika
 A centralized telephone directory of Jain community across world.
