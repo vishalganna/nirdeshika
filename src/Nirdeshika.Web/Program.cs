@@ -12,6 +12,7 @@ builder.Services
 builder.Services
     .AddInfrastructure()
     .AddMudServices()
+    .AddApplicationInsightsTelemetry()
     ;
 
 var app = builder.Build();
