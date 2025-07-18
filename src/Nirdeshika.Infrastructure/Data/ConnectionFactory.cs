@@ -9,7 +9,7 @@ internal class ConnectionFactory(
     ILogger<ConnectionFactory> logger
     ) : IConnectionFactory
 {
-    private readonly string _connectionString = configuration.GetConnectionString("NirdeshikaConnnection") ?? string.Empty;
+    private readonly string _connectionString = configuration.GetConnectionString("NirdeshikaConnection") ?? string.Empty;
 
     public IDbConnection CreateConnection()
     {
