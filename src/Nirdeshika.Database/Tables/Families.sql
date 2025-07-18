@@ -1,0 +1,9 @@
+﻿CREATE TABLE [dbo].[Families]
+(
+	[Id] UNIQUEIDENTIFIER NOT NULL PRIMARY KEY, 
+    [Head] NVARCHAR(100) NOT NULL,
+	[SurnameId] INT NULL, 
+	[NativeId] INT NULL,
+    CONSTRAINT [FK_Families_Surname] FOREIGN KEY (SurnameId) REFERENCES Surnames(Id) ON DELETE SET NULL,
+	CONSTRAINT [FK_Families_Native] FOREIGN KEY (NativeId) REFERENCES Natives(Id) ON DELETE SET NULL
+)
