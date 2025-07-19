@@ -67,6 +67,10 @@
     <Build Include="Tables\Families.sql" />
     <Build Include="Tables\Members.sql" />
     <Build Include="Tables\RelationTypes.sql" />
+    <Build Include="Tables\Addresses.sql" />
+    <None Include="Post-Deployment\SeedAddresses.sql" />
+    <Build Include="Stored Procedures\sp_Family_GetById.sql" />
+    <Build Include="Stored Procedures\sp_Family_GetAll.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeployment.sql" />

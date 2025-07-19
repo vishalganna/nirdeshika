@@ -1,0 +1,102 @@
+﻿@using Nirdeshika.Application.DTOs
+@using Nirdeshika.Application.Services
+@using Nirdeshika.Web.ViewModels
+
+<EditForm Model="@_model" OnValidSubmit="OnValidSubmitAsync">
+    <MudDialog>
+        <TitleContent>
+            Add a family
+        </TitleContent>
+        <DialogContent>
+            <DataAnnotationsValidator />
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudTextField Label="Family head" Variant="Variant.Outlined" @bind-Value="@_model.Head" For="() => _model.Head" />
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudSelect @bind-Value="_model.SurnameId" Label="Surname" Variant="Variant.Outlined" For="() => _model.SurnameId" ShrinkLabel>
+                        <MudSelectItem Value="0">Select a surname</MudSelectItem>
+                        @foreach (var surname in Surnames)
+                        {
+                            <MudSelectItem Value="@surname.Id">@surname.Name</MudSelectItem>
+                        }
+                    </MudSelect>
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudSelect @bind-Value="_model.NativeId" Label="Native" Variant="Variant.Outlined" For="() => _model.NativeId" ShrinkLabel>
+                        <MudSelectItem Value="0">Select a native</MudSelectItem>
+                        @foreach (var native in Natives)
+                        {
+                            <MudSelectItem Value="@native.Id">@native.Name</MudSelectItem>
+                        }
+                    </MudSelect>
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudSelect @bind-Value="_model.AddressId" Label="Area" Variant="Variant.Outlined" For="() => _model.AddressId" ShrinkLabel>
+                        <MudSelectItem Value="0">Select an area</MudSelectItem>
+                        @foreach (var address in Addresses)
+                        {
+                            <MudSelectItem Value="@address.Id">@address.Area</MudSelectItem>
+                        }
+                    </MudSelect>
+                </MudItem>
+
+            </MudGrid>
+
+        </DialogContent>
+        <DialogActions>
+            @if (_isWorking)
+            {
+                <MudProgressLinear Color="Color.Secondary" Indeterminate="true" Class="my-7" />
+            }
+            else
+            {
+                <MudButton Variant="Variant.Filled" OnClick="Cancel">Cancel</MudButton>
+                <MudButton Variant="Variant.Filled" Color="Color.Error" ButtonType="ButtonType.Submit" StartIcon="@Icons.Material.Rounded.Save">Create</MudButton>
+            }
+        </DialogActions>
+    </MudDialog>
+</EditForm>
+@code {
+    [Parameter]
+    public required IEnumerable<SurnameDto> Surnames { get; set; }
+
+    [Parameter]
+    public required IEnumerable<NativeDto> Natives { get; set; }
+
+    [Parameter]
+    public required IEnumerable<AddressDto> Addresses { get; set; }
+
+    [CascadingParameter]
+    public required IMudDialogInstance MudDialog { get; set; }
+
+    [Inject]
+    public required IFamilyService FamilyService { get; set; }
+
+    private void OnValidSubmitAsync()
+    {
+        _isWorking = true;
+        var family = new CreateFamilyDto(_model.Head, _model.SurnameId, _model.NativeId, _model.AddressId);
+        var result = FamilyService.CreateFamilyAsync(family);
+        if (result is not null)
+        {
+            Snackbar.Add("New family added successfully.", Severity.Success);
+        }
+        else
+        {
+            Snackbar.Add("Failed to add new family, please try again.", Severity.Error);
+        }
+
+        MudDialog.Close(DialogResult.Ok(result));
+        _isWorking = false;
+    }
+
+    private void Cancel() => MudDialog.Cancel();
+
+    private readonly AddFamilyViewModel _model = new();
+
+    private bool _isWorking = false;
+}

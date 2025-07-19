@@ -13,12 +13,12 @@
     <MudDrawer @bind-Open="@_open" ClipMode="DrawerClipMode.Always" Elevation="1" Variant="@DrawerVariant.Mini">
         <MudNavMenu Rounded="true" Margin="Margin.Normal" Color="Color.Error">
             <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Rounded.SpaceDashboard" Href="/">Dashboard</MudNavLink>
-            <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Rounded.FolderShared" Href="/surnames">Surnames</MudNavLink>
-            <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Rounded.PinDrop" Href="/natives">Natives</MudNavLink>
+            <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Rounded.PeopleOutline" Href="/families">Families</MudNavLink>
+            <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Rounded.FolderShared" Href="/static-data">Static Data</MudNavLink>
         </MudNavMenu>
     </MudDrawer>
     <MudMainContent Class="pt-16 px-16">
-        <MudContainer Class="mt-6">
+        <MudContainer Class="mx-0 mt-12" MaxWidth="MaxWidth.False">
             @Body
         </MudContainer>
     </MudMainContent>

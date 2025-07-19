@@ -1,7 +1,7 @@
 ﻿using System.Data;
 
 namespace Nirdeshika.Infrastructure.Data;
-internal interface IConnectionFactory
+public interface IConnectionFactory
 {
     IDbConnection CreateConnection();
 }

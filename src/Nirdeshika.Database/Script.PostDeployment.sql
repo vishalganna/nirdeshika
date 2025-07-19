@@ -10,6 +10,7 @@ Post-Deployment Script Template
 --------------------------------------------------------------------------------------
 */
 
+:r .\Post-Deployment\SeedAddresses.sql
 :r .\Post-Deployment\SeedNatives.sql
 :r .\Post-Deployment\SeedRelationTypes.sql
 :r .\Post-Deployment\SeedSurnames.sql

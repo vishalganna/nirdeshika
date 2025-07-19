@@ -14,10 +14,16 @@ public static class DependencyInjection
             .AddScoped<IConnectionFactory, ConnectionFactory>()
             .AddScoped<IRelationTypeRepository, RelationTypeRepository>()
             .AddScoped<ISurnameRepository, SurnameRepository>()
+            .AddScoped<INativeRepository, NativeRepository>()
+            .AddScoped<IAddressRepository, AddressRepository>()
+            .AddScoped<IFamilyRepository, FamilyRepository>()
             ;
 
         services
             .AddScoped<ISurnameService, SurnameService>()
+            .AddScoped<INativeService, NativeService>()
+            .AddScoped<IAddressService, AddressService>()
+            .AddScoped<IFamilyService, FamilyService>()
             ;
         return services;
     }

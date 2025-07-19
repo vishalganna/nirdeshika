@@ -1,6 +1,6 @@
 ﻿namespace Nirdeshika.Application.DTOs;
-public class SurnameDto
+public class AddressDto
 {
     public int Id { get; set; }
-    public required string Name { get; set; }
-};
+    public required string Area { get; set; }
+}

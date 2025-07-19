@@ -1,0 +1,26 @@
+﻿CREATE PROCEDURE [dbo].[sp_Family_GetById]
+    @familyId INT
+AS
+BEGIN
+	SELECT 
+		F.Id AS FamilyId,
+		F.Head,
+		F.SurnameId,
+		F.NativeId,
+		F.AddressId,
+
+		S.Id,
+		S.[Name],
+
+		N.Id,
+		N.[Name],
+
+		A.Id,
+		A.Area
+
+	FROM Families F
+	JOIN Surnames S ON F.SurnameId = S.Id
+	JOIN Natives N ON F.NativeId = N.Id
+	JOIN Addresses A ON F.AddressId = A.Id
+	WHERE F.Id = @familyId
+END

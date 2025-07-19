@@ -1,0 +1,60 @@
+﻿@page "/static-data"
+@using Nirdeshika.Application.Services
+@using Nirdeshika.Application.DTOs
+@inject ISurnameService SurnameService
+@inject INativeService NativeService
+
+<h1>Static Data</h1>
+
+<MudGrid Class="mt-4">
+    <MudItem sm="12" md="6">
+        <MudDataGrid Items="@_surnames" Loading="@_isLoading" Striped="true" Bordered="true" Hover="true">
+            <ToolBarContent>
+                <MudText Typo="Typo.h5">Surnames</MudText>
+                <MudSpacer />
+            </ToolBarContent>
+            <Columns>
+                <PropertyColumn Property="x => x.Id" />
+                <PropertyColumn Property="x => x.Name" />
+            </Columns>
+        </MudDataGrid>
+    </MudItem>
+    <MudItem sm="12" md="6">
+        <MudDataGrid Items="@_natives" Loading="@_isLoading" Striped="true" Bordered="true" Hover="true">
+            <ToolBarContent>
+                <MudText Typo="Typo.h5">Natives</MudText>
+                <MudSpacer />
+            </ToolBarContent>
+            <Columns>
+                <PropertyColumn Property="x => x.Id" />
+                <PropertyColumn Property="x => x.Name" />
+            </Columns>
+        </MudDataGrid>
+    </MudItem>
+</MudGrid>
+
+@code {
+    private bool _isLoading = true;
+    private IEnumerable<SurnameDto> _surnames = [];
+    private IEnumerable<NativeDto> _natives = [];
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.WhenAll(
+            LoadSurnamesAsync(),
+            LoadNativesAsync()
+        );
+
+        _isLoading = false;
+    }
+
+    private async Task LoadSurnamesAsync()
+    {
+        _surnames = await SurnameService.GetAllSurnamesAsync();
+    }
+
+    private async Task LoadNativesAsync()
+    {
+        _natives = await NativeService.GetAllNativesAsync();
+    }
+}
