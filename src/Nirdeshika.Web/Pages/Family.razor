@@ -1,5 +1,8 @@
 ﻿@page "/families/{Id:int}"
 
+<div id="add-family-member-fab">
+    <MudFab Color="Color.Error" StartIcon="@Icons.Material.Filled.Add" @onclick="OpenAddFamilyMemberDialogAsync" />
+</div>
 
 @if (_isLoading)
 {
@@ -18,8 +21,9 @@ else
             <MudGrid>
                 <MudItem xs="12" sm="4" Class="d-flex justify-center align-center">
                     <MudAvatar Size="Size.Large"
-                               Class="elevation-3"
-                               Style="border: 4px solid var(--mud-palette-primary);" />
+                               Color="Color.Secondary">
+                        @_family.Head?[..1].ToUpper()
+                    </MudAvatar>
                 </MudItem>
                 <MudItem xs="12" sm="8">
                     <MudText Typo="Typo.h4">@_family.Head</MudText>
@@ -31,25 +35,44 @@ else
 
             <!-- Address -->
             <MudText Typo="Typo.h6" GutterBottom="true"><MudIcon Icon="@Icons.Material.Filled.Home" /> Address</MudText>
-            <MudText>@_family.Address.Area</MudText>
+            <MudText>@_family.Address?.Area</MudText>
 
             <MudDivider Class="my-4" />
 
-            <!-- Members List -->
-            <MudText Typo="Typo.h6" GutterBottom="true"><MudIcon Icon="@Icons.Material.Filled.Group" /> Family Members</MudText>
-
-            @*             <MudTable Items="@_family.Members" Dense="true" Hover="true" Striped="true">
-                <HeaderContent>
-                    <MudTh>Name</MudTh>
-                    <MudTh>Relation</MudTh>
-                    <MudTh>Age</MudTh>
-                </HeaderContent>
-                <RowTemplate>
-                    <MudTd>@context.Name</MudTd>
-                    <MudTd>@context.Relation</MudTd>
-                    <MudTd>@context.Age</MudTd>
-                </RowTemplate>
-            </MudTable> *@
+            <MudItem sm="12">
+                <MudDataGrid Items="@_familyMembers" Loading="@_loadingFamilyMembers" Striped="true" Bordered="true" Hover="true">
+                    <ToolBarContent>
+                        <MudStack Row>
+                            <MudIcon Icon="@Icons.Material.Rounded.Group" />
+                            <MudText Typo="Typo.h6">Family Members</MudText>
+                        </MudStack>
+                    </ToolBarContent>
+                    <Columns>
+                        <PropertyColumn Title="" Property="x => x.Gender">
+                            <CellTemplate>
+                                @if (context.Item!.Gender == 'M')
+                                {
+                                    <MudIcon Icon="@Icons.Material.Rounded.Male" Color="Color.Info" />
+                                }
+                                else
+                                {
+                                    <MudIcon Icon="@Icons.Material.Rounded.Female" Color="Color.Secondary" />
+                                }
+                            </CellTemplate>
+                        </PropertyColumn>
+                        <PropertyColumn Property="x => x.Name" />
+                        <PropertyColumn Title="Relation type" Property="x => x.RelationTypeId">
+                            <CellTemplate>
+                                @_relationTypes.FirstOrDefault(rt => rt.Id == context.Item!.RelationTypeId)?.Type
+                            </CellTemplate>
+                        </PropertyColumn>
+                        <PropertyColumn Property="x => x.Relative" />
+                        <PropertyColumn Title="Date of birth" Property="x => x.DateOfBirth" Format="dd-MM-yyyy" />
+                        
+                        <PropertyColumn Title="Mobile number" Property="x => x.MobileNumber" />
+                    </Columns>
+                </MudDataGrid>
+            </MudItem>
 
             <!-- Footer -->
             <MudCardActions Class="mt-6 justify-end">

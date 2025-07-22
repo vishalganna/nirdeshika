@@ -87,7 +87,7 @@ public class FamilyRepository(
                     return family;
                 },
                 new { FamilyId = id },
-                splitOn: "Id,Id,Id",
+                splitOn: "Id,Id,Id,Id",
                 commandType: CommandType.StoredProcedure
             );
 

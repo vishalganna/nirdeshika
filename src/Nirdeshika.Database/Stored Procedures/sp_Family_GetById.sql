@@ -3,7 +3,7 @@
 AS
 BEGIN
 	SELECT 
-		F.Id AS FamilyId,
+		F.Id,
 		F.Head,
 		F.SurnameId,
 		F.NativeId,

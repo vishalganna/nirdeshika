@@ -1,0 +1,118 @@
+﻿@using Nirdeshika.Application.DTOs
+@using Nirdeshika.Application.Services
+@using Nirdeshika.Web.ViewModels
+
+<EditForm Model="@_model" OnValidSubmit="OnValidSubmitAsync">
+    <MudDialog>
+        <TitleContent>
+            Add a family member
+        </TitleContent>
+        <DialogContent>
+            <DataAnnotationsValidator />
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudTextField Label="Name" Variant="Variant.Outlined" @bind-Value="@_model.Name" For="() => _model.Name" />
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudDatePicker Label="Date of birth"
+                                   Editable="true"
+                                   @bind-Date="@_model.DateOfBirth"
+                                   DateFormat="dd-mm-yyyy"
+                                   Placeholder="Select date of birth"
+                                   Variant="Variant.Outlined"
+                                   For="()=> _model.DateOfBirth" />
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudRadioGroup @bind-Value="@_model.Gender">
+                        <MudRadio Value="@('M')" Color="Color.Primary">Male</MudRadio>
+                        <MudRadio Value="@('F')" Color="Color.Secondary">Female</MudRadio>
+                    </MudRadioGroup>
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudTextField Label="Mobile number" Variant="Variant.Outlined" @bind-Value="@_model.MobileNumber" For="() => _model.MobileNumber" />
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudSelect @bind-Value="_model.RelationTypeId" Label="Relation type" Variant="Variant.Outlined" For="() => _model.RelationTypeId" ShrinkLabel>
+                        <MudSelectItem Value="@((byte)0)">Select a relation type</MudSelectItem>
+                        @foreach (var type in RelationTypes)
+                        {
+                            <MudSelectItem Value="@type.Id">@type.Type</MudSelectItem>
+                        }
+                    </MudSelect>
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudTextField Label="Relative" Variant="Variant.Outlined" @bind-Value="@_model.Relative" For="() => _model.Relative" />
+                </MudItem>
+
+                <MudItem xs="12">
+
+                    <MudCheckBox @bind-Value="@_model.IsFamilyHead" Label="Is family head" Color="Color.Secondary"></MudCheckBox>
+
+                </MudItem>
+            </MudGrid>
+
+        </DialogContent>
+        <DialogActions>
+            @if (_isWorking)
+            {
+                <MudProgressLinear Color="Color.Secondary" Indeterminate="true" Class="my-7" />
+            }
+            else
+            {
+                <MudButton Variant="Variant.Filled" OnClick="Cancel">Cancel</MudButton>
+                <MudButton Variant="Variant.Filled" Color="Color.Error" ButtonType="ButtonType.Submit" StartIcon="@Icons.Material.Rounded.Save">Save</MudButton>
+            }
+        </DialogActions>
+    </MudDialog>
+</EditForm>
+@code {
+    [Parameter]
+    public int FamilyId { get; set; }
+
+    [Parameter]
+    public required IEnumerable<RelationTypeDto> RelationTypes { get; set; }
+
+    [CascadingParameter]
+    public required IMudDialogInstance MudDialog { get; set; }
+
+    [Inject]
+    public required IFamilyMemberService FamilyMemberService { get; set; }
+
+    private async Task OnValidSubmitAsync()
+    {
+        _isWorking = true;
+        var familyMember = new CreateFamilyMemberDto(
+            _model.Name,
+            _model.DateOfBirth,
+            _model.Gender,
+            _model.MobileNumber,
+            _model.RelationTypeId,
+            _model.Relative,
+            _model.IsFamilyHead,
+            FamilyId);
+        var result = await FamilyMemberService.AddFamilyMemberAsync(familyMember);
+
+        if (result is not null)
+        {
+            Snackbar.Add("New family member added successfully.", Severity.Success);
+        }
+        else
+        {
+            Snackbar.Add("Failed to add family member, please try again.", Severity.Error);
+        }
+
+        MudDialog.Close(DialogResult.Ok(result));
+        _isWorking = false;
+    }
+
+    private void Cancel() => MudDialog.Cancel();
+
+    private readonly AddFamilyMemberViewModel _model = new();
+
+    private bool _isWorking = false;
+}

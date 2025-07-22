@@ -17,6 +17,7 @@ public static class DependencyInjection
             .AddScoped<INativeRepository, NativeRepository>()
             .AddScoped<IAddressRepository, AddressRepository>()
             .AddScoped<IFamilyRepository, FamilyRepository>()
+            .AddScoped<IFamilyMemberRepository, FamilyMemberRepository>()
             ;
 
         services
@@ -24,6 +25,8 @@ public static class DependencyInjection
             .AddScoped<INativeService, NativeService>()
             .AddScoped<IAddressService, AddressService>()
             .AddScoped<IFamilyService, FamilyService>()
+            .AddScoped<IFamilyMemberService, FamilyMemberService>()
+            .AddScoped<IRelationTypeService, RelationTypeService>()
             ;
         return services;
     }
