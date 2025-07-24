@@ -18,14 +18,14 @@
                     <MudDatePicker Label="Date of birth"
                                    Editable="true"
                                    @bind-Date="@_model.DateOfBirth"
-                                   DateFormat="dd-mm-yyyy"
+                                   DateFormat="dd-MM-yyyy"
                                    Placeholder="Select date of birth"
                                    Variant="Variant.Outlined"
                                    For="()=> _model.DateOfBirth" />
                 </MudItem>
 
                 <MudItem xs="12">
-                    <MudRadioGroup @bind-Value="@_model.Gender">
+                    <MudRadioGroup @bind-Value="@_model.Gender" For="() => _model.Gender">
                         <MudRadio Value="@('M')" Color="Color.Primary">Male</MudRadio>
                         <MudRadio Value="@('F')" Color="Color.Secondary">Female</MudRadio>
                     </MudRadioGroup>
@@ -91,7 +91,7 @@
             _model.DateOfBirth,
             _model.Gender,
             _model.MobileNumber,
-            _model.RelationTypeId,
+            _model.RelationTypeId == 0 ? null : _model.RelationTypeId,
             _model.Relative,
             _model.IsFamilyHead,
             FamilyId);
@@ -114,5 +114,5 @@
 
     private readonly AddFamilyMemberViewModel _model = new();
 
-    private bool _isWorking = false;
+    private bool _isWorking;
 }

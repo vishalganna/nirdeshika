@@ -14,7 +14,7 @@ public partial class Family
 
     [Inject]
     public required IFamilyService FamilyService { get; set; }
-    
+
     [Inject]
     public required IFamilyMemberService FamilyMemberService { get; set; }
 
@@ -53,6 +53,10 @@ public partial class Family
     {
         _loadingFamilyMembers = true;
         _familyMembers = await FamilyMemberService.GetByFamilyIdAsync(Id);
+        _familyMembers = _familyMembers
+            .OrderByDescending(m => m.IsFamilyHead)
+            .ThenBy(x => x.Sequence)
+            ;
         _loadingFamilyMembers = false;
     }
 

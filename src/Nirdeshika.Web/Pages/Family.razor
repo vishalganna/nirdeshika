@@ -19,31 +19,31 @@ else
         <MudPaper Elevation="4" Class="pa-6 rounded-lg">
             <!-- Head of Family -->
             <MudGrid>
-                <MudItem xs="12" sm="4" Class="d-flex justify-center align-center">
+                <MudItem xs="12" sm="6" Class="d-flex gap-x-8">
                     <MudAvatar Size="Size.Large"
                                Color="Color.Secondary">
                         @_family.Head?[..1].ToUpper()
                     </MudAvatar>
+                    <div>
+                        <h2>@_family.Head</h2>
+                        <div>Family ID: @_family.Id</div>
+                    </div>
                 </MudItem>
-                <MudItem xs="12" sm="8">
-                    <MudText Typo="Typo.h4">@_family.Head</MudText>
-                    <MudText Typo="Typo.subtitle1">Family ID: @_family.Id</MudText>
+                <MudItem xs="12" sm="6" Class="d-flex gap-x-8">
+                    <MudAvatar Color="Color.Info" Variant="Variant.Filled" Size="Size.Large">
+                        <MudIcon Icon="@Icons.Material.Rounded.Place" />
+                    </MudAvatar>
+                    <div>
+                        <h2>@_family.Address?.Area</h2>
+                        <div>@_family.Native?.Name</div>
+                    </div>
                 </MudItem>
             </MudGrid>
 
-            <MudDivider Class="my-4" />
-
-            <!-- Address -->
-            <MudText Typo="Typo.h6" GutterBottom="true"><MudIcon Icon="@Icons.Material.Filled.Home" /> Address</MudText>
-            <MudText>@_family.Address?.Area</MudText>
-
-            <MudDivider Class="my-4" />
-
-            <MudItem sm="12">
+            <MudItem sm="12" Class="mt-8">
                 <MudDataGrid Items="@_familyMembers" Loading="@_loadingFamilyMembers" Striped="true" Bordered="true" Hover="true">
                     <ToolBarContent>
                         <MudStack Row>
-                            <MudIcon Icon="@Icons.Material.Rounded.Group" />
                             <MudText Typo="Typo.h6">Family Members</MudText>
                         </MudStack>
                     </ToolBarContent>
@@ -58,6 +58,11 @@ else
                                 {
                                     <MudIcon Icon="@Icons.Material.Rounded.Female" Color="Color.Secondary" />
                                 }
+
+                                @if (context.Item!.IsFamilyHead)
+                                {
+                                    <MudIcon Icon="@Icons.Material.Rounded.ManageAccounts" Color="Color.Success" />
+                                }
                             </CellTemplate>
                         </PropertyColumn>
                         <PropertyColumn Property="x => x.Name" />
@@ -68,7 +73,6 @@ else
                         </PropertyColumn>
                         <PropertyColumn Property="x => x.Relative" />
                         <PropertyColumn Title="Date of birth" Property="x => x.DateOfBirth" Format="dd-MM-yyyy" />
-                        
                         <PropertyColumn Title="Mobile number" Property="x => x.MobileNumber" />
                     </Columns>
                 </MudDataGrid>
