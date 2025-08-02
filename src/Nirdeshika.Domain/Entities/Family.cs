@@ -5,9 +5,10 @@ public class Family
     public required string Head { get; set; }
     public int SurnameId { get; set; }
     public int NativeId { get; set; }
+    public int SectId { get; set; }
     public int AddressId { get; set; }
-
-    public Surname Surname { get; set; }
-    public Native Native { get; set; }
-    public Address Address { get; set; }
+    public Surname? Surname { get; set; }
+    public Native? Native { get; set; }
+    public Sect? Sect { get; set; }
+    public Address? Address { get; set; }
 };

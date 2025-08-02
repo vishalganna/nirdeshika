@@ -9,9 +9,10 @@ public static class FamilyExtenstions
         {
             Id = source.Id,
             Head = source.Head,
-            Surname = source.Surname.ToDto(),
-            Native = source.Native.ToDto(),
-            Address = source.Address.ToDto()
+            Surname = source.Surname?.ToDto(),
+            Sect = source.Sect?.ToDto(),
+            Native = source.Native?.ToDto(),
+            Address = source.Address?.ToDto()
         };
 
     public static IEnumerable<FamilyDto> ToDto(this IEnumerable<Family> source)

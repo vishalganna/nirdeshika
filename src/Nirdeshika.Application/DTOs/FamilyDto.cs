@@ -6,4 +6,5 @@ public class FamilyDto
     public SurnameDto? Surname { get; set; }
     public NativeDto? Native { get; set; }
     public AddressDto? Address { get; set; }
+    public SectDto? Sect { get; set; }
 }

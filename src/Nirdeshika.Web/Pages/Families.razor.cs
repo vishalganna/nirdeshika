@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Hosting.Server;
 using MudBlazor;
 using Nirdeshika.Application.DTOs;
 using Nirdeshika.Application.Services;
@@ -16,6 +15,9 @@ public partial class Families
     private INativeService NativeService { get; set; } = default!;
 
     [Inject]
+    private ISectService SectService { get; set; } = default!;
+
+    [Inject]
     private IAddressService AddressService { get; set; } = default!;
 
     [Inject]
@@ -27,12 +29,12 @@ public partial class Families
             LoadSurnamesAsync(),
             LoadNativesAsync(),
             LoadAddressesAsync(),
+            LoadSectsAsync(),
             LoadFamiliesAsync()
         );
 
         _isLoading = false;
     }
-
     private async Task OpenAddFamilyDialogAsync()
     {
         var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true };
@@ -41,6 +43,7 @@ public partial class Families
         {
             { nameof(AddFamilyDialog.Surnames), _surnames },
             { nameof(AddFamilyDialog.Natives), _natives },
+            { nameof(AddFamilyDialog.Sects), _sects },
             { nameof(AddFamilyDialog.Addresses), _addresses }
         };
 
@@ -69,6 +72,11 @@ public partial class Families
         _addresses = await AddressService.GetAllAddressesAsync();
     }
 
+    private async Task LoadSectsAsync()
+    {
+        _sects = await SectService.GetAllSectsAsync();
+    }
+
     private async Task LoadFamiliesAsync()
     {
         _families = await FamilyService.GetAllFamiliesAsync();
@@ -81,5 +89,6 @@ public partial class Families
     private IEnumerable<SurnameDto> _surnames = [];
     private IEnumerable<NativeDto> _natives = [];
     private IEnumerable<AddressDto> _addresses = [];
+    private IEnumerable<SectDto> _sects = [];
     private IEnumerable<FamilyDto> _families = null;
 }

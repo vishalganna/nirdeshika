@@ -18,6 +18,7 @@ public static class DependencyInjection
             .AddScoped<IAddressRepository, AddressRepository>()
             .AddScoped<IFamilyRepository, FamilyRepository>()
             .AddScoped<IFamilyMemberRepository, FamilyMemberRepository>()
+            .AddScoped<ISectRepository, SectRepository>()
             ;
 
         services
@@ -27,6 +28,7 @@ public static class DependencyInjection
             .AddScoped<IFamilyService, FamilyService>()
             .AddScoped<IFamilyMemberService, FamilyMemberService>()
             .AddScoped<IRelationTypeService, RelationTypeService>()
+            .AddScoped<ISectService, SectService>()
             ;
         return services;
     }

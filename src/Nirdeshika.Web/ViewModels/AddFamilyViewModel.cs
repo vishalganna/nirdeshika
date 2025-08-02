@@ -12,6 +12,8 @@ public class AddFamilyViewModel
     public int SurnameId { get; set; } = 0;
     [Range(1, int.MaxValue, ErrorMessage = "Please select a native.")]
     public int NativeId { get; set; } = 0;
+
+    public int SectId { get; set; } = 0;
     [Range(1, int.MaxValue, ErrorMessage = "Please select a area.")]
     public int AddressId { get; set; } = 0;
 }

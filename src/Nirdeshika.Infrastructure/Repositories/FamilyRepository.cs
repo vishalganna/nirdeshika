@@ -17,13 +17,14 @@ public class FamilyRepository(
         try
         {
             using var connection = connectionFactory.CreateConnection();
-            var sql = @"INSERT INTO Families (Head, SurnameId, NativeId, AddressId) VALUES(@head, @surnameId, @nativeId, @addressId)
+            var sql = @"INSERT INTO Families (Head, SurnameId, NativeId, SectId, AddressId) VALUES(@head, @surnameId, @nativeId, @sectId, @addressId)
                         SELECT CAST(SCOPE_IDENTITY() AS INT);";
             object parameters = new
             {
                 head = family.Head,
                 surnameId = family.SurnameId,
                 nativeId = family.NativeId,
+                sectId = family.SectId,
                 addressId = family.AddressId
             };
             return connection.ExecuteScalar<int>(sql, parameters);
@@ -47,6 +48,7 @@ public class FamilyRepository(
             var families = result.Read<Family>().ToList();
             var surnames = result.Read<Surname>().ToDictionary(s => s.Id);
             var natives = result.Read<Native>().ToDictionary(n => n.Id);
+            var sects = result.Read<Sect>().ToDictionary(s => s.Id);
             var addresses = result.Read<Address>().ToDictionary(a => a.Id);
 
             // Wire up nested data
@@ -57,6 +59,9 @@ public class FamilyRepository(
 
                 if (natives.TryGetValue(family.NativeId, out var native))
                     family.Native = native;
+
+                if(sects.TryGetValue(family.SectId, out var sect))
+                    family.Sect = sect;
 
                 if (addresses.TryGetValue(family.AddressId, out var address))
                     family.Address = address;
@@ -77,17 +82,18 @@ public class FamilyRepository(
         try
         {
             using var connection = connectionFactory.CreateConnection();
-            var result = await connection.QueryAsync<Family, Surname, Native, Address, Family>(
+            var result = await connection.QueryAsync<Family, Surname, Native, Sect, Address, Family>(
                 "sp_Family_GetById",
-                (family, surname, native, address) =>
+                (family, surname, native, sect, address) =>
                 {
                     family.Surname = surname;
                     family.Native = native;
+                    family.Sect = sect;
                     family.Address = address;
                     return family;
                 },
                 new { FamilyId = id },
-                splitOn: "Id,Id,Id,Id",
+                splitOn: "Id,Id,Id,Id,Id",
                 commandType: CommandType.StoredProcedure
             );
 

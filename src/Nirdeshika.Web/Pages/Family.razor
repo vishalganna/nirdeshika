@@ -17,25 +17,32 @@ else
     else
     {
         <MudPaper Elevation="4" Class="pa-6 rounded-lg">
-            <!-- Head of Family -->
             <MudGrid>
-                <MudItem xs="12" sm="6" Class="d-flex gap-x-8">
+                <MudItem xs="12" sm="4" Class="d-flex gap-x-8">
                     <MudAvatar Size="Size.Large"
                                Color="Color.Secondary">
-                        @_family.Head?[..1].ToUpper()
+                        @_family.Head[..1].ToUpper()
                     </MudAvatar>
                     <div>
                         <h2>@_family.Head</h2>
                         <div>Family ID: @_family.Id</div>
                     </div>
                 </MudItem>
-                <MudItem xs="12" sm="6" Class="d-flex gap-x-8">
+                <MudItem xs="12" sm="4" Class="d-flex gap-x-8">
                     <MudAvatar Color="Color.Info" Variant="Variant.Filled" Size="Size.Large">
                         <MudIcon Icon="@Icons.Material.Rounded.Place" />
                     </MudAvatar>
                     <div>
                         <h2>@_family.Address?.Area</h2>
                         <div>@_family.Native?.Name</div>
+                    </div>
+                </MudItem>
+                <MudItem xs="12" sm="4" Class="d-flex gap-x-8">
+                    <MudAvatar Color="Color.Tertiary" Variant="Variant.Filled" Size="Size.Large">
+                        <MudIcon Icon="@Icons.Material.Rounded.CallSplit" />
+                    </MudAvatar>
+                    <div>
+                        <h2>@_family.Sect?.Name</h2>
                     </div>
                 </MudItem>
             </MudGrid>

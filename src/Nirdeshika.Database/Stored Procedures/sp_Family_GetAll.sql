@@ -6,5 +6,7 @@ AS
 
 	SELECT * FROM Natives;
 
+	SELECT * FROM Sects;
+
 	SELECT * FROM Addresses;
 RETURN 0

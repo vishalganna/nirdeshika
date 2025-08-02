@@ -44,6 +44,16 @@
                     </MudSelect>
                 </MudItem>
 
+                <MudItem xs="12">
+                    <MudSelect @bind-Value="_model.SectId" Label="Sect" Variant="Variant.Outlined" For="() => _model.SectId" ShrinkLabel>
+                        <MudSelectItem Value="0">Select a sect</MudSelectItem>
+                        @foreach (var sect in Sects)
+                        {
+                            <MudSelectItem Value="@sect.Id">@sect.Name</MudSelectItem>
+                        }
+                    </MudSelect>
+                </MudItem>
+
             </MudGrid>
 
         </DialogContent>
@@ -68,6 +78,9 @@
     public required IEnumerable<NativeDto> Natives { get; set; }
 
     [Parameter]
+    public required IEnumerable<SectDto> Sects { get; set; }
+
+    [Parameter]
     public required IEnumerable<AddressDto> Addresses { get; set; }
 
     [CascadingParameter]
@@ -79,7 +92,7 @@
     private void OnValidSubmitAsync()
     {
         _isWorking = true;
-        var family = new CreateFamilyDto(_model.Head, _model.SurnameId, _model.NativeId, _model.AddressId);
+        var family = new CreateFamilyDto(_model.Head, _model.SurnameId, _model.NativeId, _model.SectId == 0 ? null : _model.SectId, _model.AddressId);
         var result = FamilyService.CreateFamilyAsync(family);
         if (result is not null)
         {
