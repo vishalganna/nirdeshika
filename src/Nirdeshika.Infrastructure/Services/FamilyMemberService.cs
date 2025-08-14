@@ -16,4 +16,7 @@ public class FamilyMemberService(
 
     public async Task<int?> AddFamilyMemberAsync(CreateFamilyMemberDto familyMemberDto)
         => await familyMemberRepository.AddFamilyMemberAsync(familyMemberDto);
+
+    public async Task<bool> DeleteAsync(int id)
+        => await familyMemberRepository.DeleteAsync(id);
 }

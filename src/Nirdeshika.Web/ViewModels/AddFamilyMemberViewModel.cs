@@ -6,7 +6,7 @@ public class AddFamilyMemberViewModel
 {
     [Required(ErrorMessage = "Please enter a name")]
     [StringLength(100, ErrorMessage = "Please enter a valid name")]
-    public string Name { get; set; }
+    public string? Name { get; set; }
     public DateTime? DateOfBirth { get; set; } = DateTime.Now;
     public char Gender { get; set; } = 'M';
     public string? MobileNumber { get; set; }

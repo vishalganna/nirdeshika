@@ -1,6 +1,8 @@
 ﻿@page "/static-data"
 @using Nirdeshika.Application.Services
 @using Nirdeshika.Application.DTOs
+@inject IAddressService AddressService
+@inject ISectService SectService
 @inject ISurnameService SurnameService
 @inject INativeService NativeService
 
@@ -17,7 +19,26 @@
                 <PropertyColumn Property="x => x.Id" />
                 <PropertyColumn Property="x => x.Name" />
             </Columns>
+
+            <PagerContent>
+                <MudDataGridPager T="SurnameDto" />
+            </PagerContent>
         </MudDataGrid>
+
+        <MudDataGrid Items="@_addresses" Loading="@_isLoading" Striped="true" Bordered="true" Hover="true" Class="my-8">
+            <ToolBarContent>
+                <MudText Typo="Typo.h5">Areas</MudText>
+                <MudSpacer />
+            </ToolBarContent>
+            <Columns>
+                <PropertyColumn Property="x => x.Id" />
+                <PropertyColumn Property="x => x.Area" />
+            </Columns>
+            <PagerContent>
+                <MudDataGridPager T="AddressDto" />
+            </PagerContent>
+        </MudDataGrid>
+
     </MudItem>
     <MudItem sm="12" md="6">
         <MudDataGrid Items="@_natives" Loading="@_isLoading" Striped="true" Bordered="true" Hover="true">
@@ -29,6 +50,25 @@
                 <PropertyColumn Property="x => x.Id" />
                 <PropertyColumn Property="x => x.Name" />
             </Columns>
+
+            <PagerContent>
+                <MudDataGridPager T="NativeDto" />
+            </PagerContent>
+        </MudDataGrid>
+        
+        <MudDataGrid Items="@_sects" Loading="@_isLoading" Striped="true" Bordered="true" Hover="true" Class="my-8">
+            <ToolBarContent>
+                <MudText Typo="Typo.h5">Sects</MudText>
+                <MudSpacer />
+            </ToolBarContent>
+            <Columns>
+                <PropertyColumn Property="x => x.Id" />
+                <PropertyColumn Property="x => x.Name" />
+            </Columns>
+
+            <PagerContent>
+                <MudDataGridPager T="SectDto" />
+            </PagerContent>
         </MudDataGrid>
     </MudItem>
 </MudGrid>
@@ -37,12 +77,16 @@
     private bool _isLoading = true;
     private IEnumerable<SurnameDto> _surnames = [];
     private IEnumerable<NativeDto> _natives = [];
+    private IEnumerable<AddressDto> _addresses = [];
+    private IEnumerable<SectDto> _sects = [];
 
     protected override async Task OnInitializedAsync()
     {
         await Task.WhenAll(
+            LoadAddressesAsync(),
             LoadSurnamesAsync(),
-            LoadNativesAsync()
+            LoadNativesAsync(),
+            LoadSectsAsync()
         );
 
         _isLoading = false;
@@ -56,5 +100,15 @@
     private async Task LoadNativesAsync()
     {
         _natives = await NativeService.GetAllNativesAsync();
+    }
+
+    private async Task LoadAddressesAsync()
+    {
+        _addresses = await AddressService.GetAllAddressesAsync();
+    }
+
+    private async Task LoadSectsAsync()
+    {
+        _sects = await SectService.GetAllSectsAsync();
     }
 }

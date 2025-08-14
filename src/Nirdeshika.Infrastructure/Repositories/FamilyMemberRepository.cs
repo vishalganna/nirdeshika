@@ -18,7 +18,7 @@ public class FamilyMemberRepository(
         {
             using var connection = connectionFactory.CreateConnection();
 
-            return await connection.QueryAsync<FamilyMember>("SELECT * FROM FamilyMembers WHERE FamilyId = @familyId", new { familyId = familyId });
+            return await connection.QueryAsync<FamilyMember>("SELECT * FROM FamilyMembers WHERE FamilyId = @familyId", new { familyId });
         }
         catch (Exception ex)
         {
@@ -54,5 +54,23 @@ public class FamilyMemberRepository(
         }
 
         return default;
+    }
+
+    public async Task<bool> DeleteAsync(int id)
+    {
+        try
+        {
+            using var connection = connectionFactory.CreateConnection();
+
+            await connection.ExecuteAsync("DELETE FROM FamilyMembers WHERE Id = @id", new { id });
+
+            return true;
+        }
+        catch (Exception e)
+        {
+            logger.LogError(e, "Error while deleting family member: {Message}", e.Message);
+        }
+
+        return false;
     }
 }

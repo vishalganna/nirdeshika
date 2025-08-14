@@ -90,5 +90,5 @@ public partial class Families
     private IEnumerable<NativeDto> _natives = [];
     private IEnumerable<AddressDto> _addresses = [];
     private IEnumerable<SectDto> _sects = [];
-    private IEnumerable<FamilyDto> _families = null;
+    private IEnumerable<FamilyDto> _families = [];
 }

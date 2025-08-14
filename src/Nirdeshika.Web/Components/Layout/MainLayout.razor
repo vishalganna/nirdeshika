@@ -6,14 +6,14 @@
 <MudSnackbarProvider />
 
 <MudLayout>
-    <MudAppBar Elevation="1" Color="Color.Error">
+    <MudAppBar Elevation="1" Color="Color.Primary">
         <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@ToggleDrawer" />
         Nirdeshika
     </MudAppBar>
     <MudDrawer @bind-Open="@_open" ClipMode="DrawerClipMode.Always" Elevation="1" Variant="@DrawerVariant.Mini">
-        <MudNavMenu Rounded="true" Margin="Margin.Normal" Color="Color.Error">
+        <MudNavMenu Rounded="true" Margin="Margin.Normal" Color="Color.Primary">
             <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Rounded.SpaceDashboard" Href="/">Dashboard</MudNavLink>
-            <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Rounded.PeopleOutline" Href="/families">Families</MudNavLink>
+            @* <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Rounded.PeopleOutline" Href="/families">Families</MudNavLink> *@
             <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Rounded.FolderShared" Href="/static-data">Static Data</MudNavLink>
         </MudNavMenu>
     </MudDrawer>

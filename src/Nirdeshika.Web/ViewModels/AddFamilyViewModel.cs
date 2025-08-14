@@ -6,7 +6,7 @@ public class AddFamilyViewModel
 {
     [Required(ErrorMessage = "Please enter family head name.")]
     [StringLength(100, ErrorMessage = "Please enter a valid name.")]
-    public string Head { get; set; }
+    public string? Head { get; set; }
 
     [Range(1, int.MaxValue, ErrorMessage = "Please select a surname.")]
     public int SurnameId { get; set; } = 0;

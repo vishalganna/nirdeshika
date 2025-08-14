@@ -81,6 +81,11 @@ else
                         <PropertyColumn Property="x => x.Relative" />
                         <PropertyColumn Title="Date of birth" Property="x => x.DateOfBirth" Format="dd-MM-yyyy" />
                         <PropertyColumn Title="Mobile number" Property="x => x.MobileNumber" />
+                        <TemplateColumn>
+                            <CellTemplate>
+                                <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Rounded.DeleteOutline" Color="@Color.Error" OnClick="() => DeleteMemberAsync(context.Item!.Id)" />
+                            </CellTemplate>
+                        </TemplateColumn>
                     </Columns>
                 </MudDataGrid>
             </MudItem>
@@ -90,7 +95,7 @@ else
                 <MudButton StartIcon="@Icons.Material.Filled.ArrowBack"
                            Variant="Variant.Filled"
                            Color="@Color.Error"
-                           OnClick="@(() => NavigationManager.NavigateTo("/families"))">
+                           OnClick="@(() => NavigationManager.NavigateTo("/"))">
                     Back to List
                 </MudButton>
             </MudCardActions>

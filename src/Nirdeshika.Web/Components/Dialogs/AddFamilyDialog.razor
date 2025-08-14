@@ -92,7 +92,7 @@
     private void OnValidSubmitAsync()
     {
         _isWorking = true;
-        var family = new CreateFamilyDto(_model.Head, _model.SurnameId, _model.NativeId, _model.SectId == 0 ? null : _model.SectId, _model.AddressId);
+        var family = new CreateFamilyDto(_model.Head!, _model.SurnameId, _model.NativeId, _model.SectId == 0 ? null : _model.SectId, _model.AddressId);
         var result = FamilyService.CreateFamilyAsync(family);
         if (result is not null)
         {
@@ -111,5 +111,5 @@
 
     private readonly AddFamilyViewModel _model = new();
 
-    private bool _isWorking = false;
+    private bool _isWorking;
 }

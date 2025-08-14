@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Microsoft.Extensions.Options;
 using MudBlazor;
 using Nirdeshika.Application.DTOs;
 using Nirdeshika.Application.Services;
@@ -43,7 +42,7 @@ public partial class Family
 
         var result = await dialog.Result;
 
-        if (!result!.Canceled && result.Data is int id)
+        if (!result!.Canceled && result.Data is int)
         {
             await LoadFamilyMembersAsync();
         }
@@ -58,6 +57,36 @@ public partial class Family
             .ThenBy(x => x.Sequence)
             ;
         _loadingFamilyMembers = false;
+    }
+
+    private async Task DeleteMemberAsync(int id)
+    {
+        var parameters = new DialogParameters<DeleteConfirmationDialog>
+        {
+            { x => x.ContentText, "Do you really want to delete the member?" }
+        };
+
+        var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
+
+        var dialog = await DialogService.ShowAsync<DeleteConfirmationDialog>("Delete", parameters, options);
+
+        var result = await dialog.Result;
+
+        if (result?.Data is bool)
+        {
+            _isLoading = true;
+            var isDeleted = await FamilyMemberService.DeleteAsync(id);
+            if (isDeleted)
+            {
+                Snackbar.Add("Family member deleted successfully.", Severity.Success);
+                await LoadFamilyMembersAsync();
+            }
+            else
+            {
+                Snackbar.Add("Failed to delete family member.", Severity.Error);
+            }
+            _isLoading = false;
+        }
     }
 
     private bool _isLoading;

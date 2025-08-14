@@ -1,4 +1,5 @@
-﻿@page "/families"
+﻿@page "/"
+@page "/families"
 
 <h1>Families</h1>
 
@@ -8,12 +9,12 @@
             <Columns>
                 <PropertyColumn Property="x => x.Id" />
                 <PropertyColumn Property="x => x.Head" />
-                <PropertyColumn Property="x => x.Surname.Name" />
-                <PropertyColumn Property="x => x.Native.Name" />
-                <PropertyColumn Property="x => x.Address.Area" />
+                <PropertyColumn Property="x => x.Surname!.Name" />
+                <PropertyColumn Property="x => x.Native!.Name" />
+                <PropertyColumn Property="x => x.Address!.Area" />
                 <TemplateColumn>
                     <CellTemplate>
-                        <MudButton Size="@Size.Small" Variant="@Variant.Filled" StartIcon="@Icons.Material.Rounded.OpenInNew" Color="@Color.Info" OnClick="() => GoToFamily(context.Item!.Id)">View</MudButton>
+                        <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Rounded.OpenInNew" Color="@Color.Info" OnClick="() => GoToFamily(context.Item!.Id)" />
                     </CellTemplate>
                 </TemplateColumn>
             </Columns>
