@@ -74,6 +74,7 @@
     <Build Include="Stored Procedures\sp_FamilyMember_Add.sql" />
     <Build Include="Tables\Sects.sql" />
     <None Include="Post-Deployment\SeedSects.sql" />
+    <Build Include="Tables\ApplicationUsers.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeployment.sql" />

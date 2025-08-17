@@ -1,0 +1,20 @@
+﻿<MudPaper Class="d-flex flex-column align-center justify-center pa-6 mx-auto my-12" Elevation="3" MaxWidth="500px" Style="text-align:center;">
+    <MudIcon Icon="@Icons.Material.Filled.Lock" Color="Color.Error" Class="mb-4" />
+
+    <MudText Typo="Typo.h5" Class="mb-2">
+        You are registered
+    </MudText>
+
+    <MudText Typo="Typo.body1" Color="Color.Surface" Class="mb-6">
+        But you are not yet authorized to view the data.<br />
+        Please contact your administrator for approval.
+    </MudText>
+
+    <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="Logout">
+        Logout
+    </MudButton>
+</MudPaper>
+
+@code {
+    void Logout() => NavigationManager.NavigateTo("/logout", true);
+}
