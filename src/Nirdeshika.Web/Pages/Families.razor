@@ -1,8 +1,5 @@
 ﻿@page "/"
 @page "/families"
-@using Microsoft.AspNetCore.Authorization
-
-@* @attribute [Authorize(Policy = "ApprovedOnly")] *@
 
 <h1>Families</h1>
 
@@ -26,5 +23,5 @@
 </MudGrid>
 
 <div id="add-family-fab">
-    <MudFab Color="Color.Error" StartIcon="@Icons.Material.Filled.Add" @onclick="OpenAddFamilyDialogAsync" />
+    <MudFab Color="Color.Primary" StartIcon="@Icons.Material.Filled.Add" @onclick="OpenAddFamilyDialogAsync" />
 </div>

@@ -10,11 +10,23 @@
     <Authorized>
         <MudLayout>
             <MudAppBar Elevation="1" Color="Color.Primary">
-                <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@ToggleDrawer" />
+                <MudIconButton Icon="@Icons.Material.Rounded.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@ToggleDrawer" />
                 Nirdeshika
                 <MudSpacer />
-                Hello, @_userName
-                <MudIconButton Icon="@Icons.Material.Outlined.Logout" Color="Color.Inherit" OnClick="Logout" />
+               
+                <MudMenu>
+                    <ActivatorContent>
+                        <MudAvatar Variant="Variant.Outlined">
+                            <MudImage Src="@_avatarUrl" />
+                        </MudAvatar>
+                    </ActivatorContent>
+                    <ChildContent>
+                        <MudMenuItem Icon="@Icons.Material.Rounded.AccountCircle" Label="@_userName" />
+                        <MudDivider />
+                        <MudMenuItem Icon="@Icons.Material.Rounded.Logout" Label="Logout" OnClick="Logout" />
+                    </ChildContent>
+                </MudMenu>
+
             </MudAppBar>
             <MudDrawer @bind-Open="@_open" ClipMode="DrawerClipMode.Always" Elevation="1" Variant="@DrawerVariant.Mini">
                 <MudNavMenu Rounded="true" Margin="Margin.Normal" Color="Color.Primary">
@@ -33,7 +45,7 @@
         </MudLayout>
     </Authorized>
     <NotAuthorized>
-        @if (context.User?.Identity?.IsAuthenticated ?? false)
+        @if (context.User.Identity?.IsAuthenticated ?? false)
         {
             <NotApproved />
         }
@@ -43,37 +55,3 @@
         }
     </NotAuthorized>
 </AuthorizeView>
-
-@code {
-
-    [Inject]
-    public required AuthenticationStateProvider AuthenticationStateProvider { get; set; }
-
-    protected override async Task OnInitializedAsync()
-    {
-        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-        var user = authState.User;
-
-        _isAuthenticated = user.Identity?.IsAuthenticated ?? false;
-        if (_isAuthenticated)
-        {
-            // Try name first, fallback to email
-            _userName = user.Identity?.Name ?? user.FindFirst(c => c.Type == "name")?.Value;
-        }
-    }
-
-    private void Logout()
-    {
-        NavigationManager.NavigateTo("/logout", true);
-    }
-
-    private void ToggleDrawer()
-    {
-        _open = !_open;
-    }
-
-    private bool _open = true;
-
-    private string? _userName;
-    private bool _isAuthenticated;
-}

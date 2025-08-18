@@ -44,6 +44,7 @@ builder.Services
             options.Authority = "https://accounts.google.com";
             options.ClientId = builder.Configuration["Authentication:Google:ClientId"];
             options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+            options.ClaimActions.MapJsonKey("urn:google:picture", "picture", "url");
             options.CallbackPath = "/signin-google";
             options.ResponseType = "code";
             options.Scope.Add("openid");
@@ -75,11 +76,11 @@ builder.Services
 
 var app = builder.Build();
 
-app.MapGet("/login", async (HttpContext ctx) =>
+app.MapGet("/login", async ctx =>
 {
     var props = new AuthenticationProperties
     {
-        RedirectUri = "/" // where to go after login
+        RedirectUri = "/"
     };
 
     await ctx.ChallengeAsync(OpenIdConnectDefaults.AuthenticationScheme, props);
@@ -89,7 +90,7 @@ app.MapGet("/logout", async (HttpContext ctx) =>
 {
     // Clear your app's auth cookie
     await ctx.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-    return Results.Redirect("/"); // send user somewhere after logout
+    return Results.Redirect("/");
 });
 
 
