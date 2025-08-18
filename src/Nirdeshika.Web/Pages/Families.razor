@@ -1,5 +1,8 @@
 ﻿@page "/"
 @page "/families"
+@using Microsoft.AspNetCore.Authorization
+
+@* @attribute [Authorize(Policy = "ApprovedOnly")] *@
 
 <h1>Families</h1>
 
