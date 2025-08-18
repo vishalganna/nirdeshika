@@ -1,7 +1,7 @@
 ﻿@page "/families/{Id:int}"
 
 <div id="add-family-member-fab">
-    <MudFab Color="Color.Error" StartIcon="@Icons.Material.Filled.Add" @onclick="OpenAddFamilyMemberDialogAsync" />
+    <MudFab Color="Color.Primary" StartIcon="@Icons.Material.Filled.Add" @onclick="OpenAddFamilyMemberDialogAsync" />
 </div>
 
 @if (_isLoading)
@@ -94,7 +94,7 @@ else
             <MudCardActions Class="mt-6 justify-end">
                 <MudButton StartIcon="@Icons.Material.Filled.ArrowBack"
                            Variant="Variant.Filled"
-                           Color="@Color.Error"
+                           Color="@Color.Primary"
                            OnClick="@(() => NavigationManager.NavigateTo("/"))">
                     Back to List
                 </MudButton>
