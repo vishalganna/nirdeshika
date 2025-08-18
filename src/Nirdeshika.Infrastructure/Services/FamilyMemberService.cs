@@ -19,4 +19,7 @@ public class FamilyMemberService(
 
     public async Task<bool> DeleteAsync(int id)
         => await familyMemberRepository.DeleteAsync(id);
+
+    public int UpdateFamilyMemberById(int id, CreateFamilyMemberDto familyMemberDto)
+        => familyMemberRepository.UpdateFamilyMember(id, familyMemberDto);
 }

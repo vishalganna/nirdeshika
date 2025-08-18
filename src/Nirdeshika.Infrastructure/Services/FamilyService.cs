@@ -6,7 +6,7 @@ using Nirdeshika.Application.Services;
 namespace Nirdeshika.Infrastructure.Services;
 public class FamilyService(IFamilyRepository familyRepository) : IFamilyService
 {
-    public int? CreateFamilyAsync(CreateFamilyDto family)
+    public int? CreateFamily(UpsertFamilyDto family)
         => familyRepository.Create(family);
 
     public async Task<IEnumerable<FamilyDto>> GetAllFamiliesAsync()
@@ -20,4 +20,7 @@ public class FamilyService(IFamilyRepository familyRepository) : IFamilyService
         var family = await familyRepository.GetByIdAsync(id);
         return family?.ToDto();
     }
+
+    public int UpdateFamilyById(int id, UpsertFamilyDto family)
+        => familyRepository.UpdateFamilyById(id, family);
 }

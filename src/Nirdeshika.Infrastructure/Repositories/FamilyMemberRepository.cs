@@ -73,4 +73,41 @@ public class FamilyMemberRepository(
 
         return false;
     }
+
+    public int UpdateFamilyMember(int id, CreateFamilyMemberDto familyMember)
+    {
+        try
+        {
+            using var connection = connectionFactory.CreateConnection();
+            const string sql = """
+                                   UPDATE FamilyMembers
+                                   SET
+                                       Name = @name,
+                                       DateOfBirth = @dateOfBirth,
+                                       Gender = @gender,
+                                       MobileNumber = @mobileNumber,
+                                       RelationTypeId = @relationTypeId,
+                                       Relative = @relative,
+                                       IsFamilyHead = @isFamilyHead
+                                   WHERE Id = @id;
+                               """;
+
+            var parameters = new DynamicParameters();
+            parameters.Add("@id", id);
+            parameters.Add("@name", familyMember.Name);
+            parameters.Add("@dateOfBirth", familyMember.DateOfBirth);
+            parameters.Add("@gender", familyMember.Gender);
+            parameters.Add("@mobileNumber", familyMember.MobileNumber);
+            parameters.Add("@relationTypeId", familyMember.RelationTypeId);
+            parameters.Add("@relative", familyMember.Relative);
+            parameters.Add("@isFamilyHead", familyMember.IsFamilyHead);
+            return connection.Execute(sql, parameters);
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Error while updating family member: {Message}", ex.Message);
+        }
+
+        return 0;
+    }
 }

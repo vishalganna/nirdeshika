@@ -9,7 +9,7 @@ namespace Nirdeshika.Web.Pages;
 public partial class Family
 {
     [Parameter]
-    public int Id { get; set; }
+    public int FamilyId { get; set; }
 
     [Inject]
     public required IFamilyService FamilyService { get; set; }
@@ -22,7 +22,7 @@ public partial class Family
 
     protected override async Task OnInitializedAsync()
     {
-        _family = await FamilyService.GetFamilyById(Id);
+        _family = await FamilyService.GetFamilyById(FamilyId);
         _relationTypes = await RelationTypeService.GetAllRelationTypesAsync();
         await LoadFamilyMembersAsync();
         _isLoading = false;
@@ -34,11 +34,32 @@ public partial class Family
 
         var parameters = new DialogParameters
         {
-            { nameof(AddFamilyMemberDialog.FamilyId), Id },
-            { nameof(AddFamilyMemberDialog.RelationTypes), _relationTypes }
+            { nameof(UpsertFamilyMemberDialog.FamilyId), FamilyId },
+            { nameof(UpsertFamilyMemberDialog.RelationTypes), _relationTypes }
         };
 
-        var dialog = await DialogService.ShowAsync<AddFamilyMemberDialog>("Add a family member", parameters, options);
+        var dialog = await DialogService.ShowAsync<UpsertFamilyMemberDialog>("Add a family member", parameters, options);
+
+        var result = await dialog.Result;
+
+        if (!result!.Canceled && result.Data is int)
+        {
+            await LoadFamilyMembersAsync();
+        }
+    }
+
+    private async Task UpdateFamilyMemberAsync(FamilyMemberDto familyMember)
+    {
+        var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true };
+
+        var parameters = new DialogParameters
+        {
+            { nameof(UpsertFamilyMemberDialog.FamilyMember), familyMember },
+            { nameof(UpsertFamilyMemberDialog.FamilyId), FamilyId },
+            { nameof(UpsertFamilyMemberDialog.RelationTypes), _relationTypes }
+        };
+
+        var dialog = await DialogService.ShowAsync<UpsertFamilyMemberDialog>("Update family member", parameters, options);
 
         var result = await dialog.Result;
 
@@ -51,7 +72,7 @@ public partial class Family
     private async Task LoadFamilyMembersAsync()
     {
         _loadingFamilyMembers = true;
-        _familyMembers = await FamilyMemberService.GetByFamilyIdAsync(Id);
+        _familyMembers = await FamilyMemberService.GetByFamilyIdAsync(FamilyId);
         _familyMembers = _familyMembers
             .OrderByDescending(m => m.IsFamilyHead)
             .ThenBy(x => x.Sequence)
@@ -93,5 +114,5 @@ public partial class Family
     private bool _loadingFamilyMembers;
     private FamilyDto? _family;
     private IEnumerable<RelationTypeDto> _relationTypes = [];
-    private IEnumerable<FamilyMemberDto>? _familyMembers = [];
+    private IEnumerable<FamilyMemberDto> _familyMembers = [];
 }

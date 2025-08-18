@@ -12,7 +12,7 @@ public class FamilyRepository(
     ILogger<FamilyRepository> logger
     ) : IFamilyRepository
 {
-    public int? Create(CreateFamilyDto family)
+    public int? Create(UpsertFamilyDto family)
     {
         try
         {
@@ -60,7 +60,7 @@ public class FamilyRepository(
                 if (natives.TryGetValue(family.NativeId, out var native))
                     family.Native = native;
 
-                if(sects.TryGetValue(family.SectId, out var sect))
+                if (sects.TryGetValue(family.SectId, out var sect))
                     family.Sect = sect;
 
                 if (addresses.TryGetValue(family.AddressId, out var address))
@@ -105,5 +105,41 @@ public class FamilyRepository(
         }
 
         return default;
+    }
+
+    public int UpdateFamilyById(int id, UpsertFamilyDto family)
+    {
+        try
+        {
+            using var connection = connectionFactory.CreateConnection();
+            const string sql = """
+                        UPDATE Families
+                        SET 
+                            Head = @head,
+                            SurnameId = @surnameId,
+                            NativeId = @nativeId,
+                            SectId = @sectId,
+                            AddressId = @addressId
+                        WHERE Id = @id;
+                      """;
+
+            object parameters = new
+            {
+                id,
+                head = family.Head,
+                surnameId = family.SurnameId,
+                nativeId = family.NativeId,
+                sectId = family.SectId,
+                addressId = family.AddressId
+            };
+
+            return connection.Execute(sql, parameters);
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Error while updating family: {Message}", ex.Message);
+        }
+
+        return 0;
     }
 }
