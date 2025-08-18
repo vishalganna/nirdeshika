@@ -1,12 +1,8 @@
-﻿@using Nirdeshika.Application.DTOs
-@using Nirdeshika.Application.Services
-@using Nirdeshika.Web.ViewModels
-
-<EditForm Model="@_model" OnValidSubmit="OnValidSubmitAsync">
+﻿<EditForm Model="@_model" OnValidSubmit="OnValidSubmitAsync">
     <MudDialog>
-        <TitleContent>
+        @*<TitleContent>
             Add a family member
-        </TitleContent>
+        </TitleContent>*@
         <DialogContent>
             <DataAnnotationsValidator />
             <MudGrid>
@@ -32,7 +28,7 @@
                 </MudItem>
 
                 <MudItem xs="12">
-                    <MudTextField Label="Mobile number" Variant="Variant.Outlined" @bind-Value="@_model.MobileNumber" For="() => _model.MobileNumber" />
+                    <MudTextField Label="Mobile number" Variant="Variant.Outlined" @bind-Value="@_model.MobileNumber" For="() => _model.MobileNumber" Mask="@(new PatternMask("0000000000"))" Adornment="Adornment.Start" AdornmentText="+91" />
                 </MudItem>
 
                 <MudItem xs="12">
@@ -70,49 +66,3 @@
         </DialogActions>
     </MudDialog>
 </EditForm>
-@code {
-    [Parameter]
-    public int FamilyId { get; set; }
-
-    [Parameter]
-    public required IEnumerable<RelationTypeDto> RelationTypes { get; set; }
-
-    [CascadingParameter]
-    public required IMudDialogInstance MudDialog { get; set; }
-
-    [Inject]
-    public required IFamilyMemberService FamilyMemberService { get; set; }
-
-    private async Task OnValidSubmitAsync()
-    {
-        _isWorking = true;
-        var familyMember = new CreateFamilyMemberDto(
-            _model.Name!,
-            _model.DateOfBirth,
-            _model.Gender,
-            _model.MobileNumber,
-            _model.RelationTypeId == 0 ? null : _model.RelationTypeId,
-            _model.Relative,
-            _model.IsFamilyHead,
-            FamilyId);
-        var result = await FamilyMemberService.AddFamilyMemberAsync(familyMember);
-
-        if (result is not null)
-        {
-            Snackbar.Add("New family member added successfully.", Severity.Success);
-        }
-        else
-        {
-            Snackbar.Add("Failed to add family member, please try again.", Severity.Error);
-        }
-
-        MudDialog.Close(DialogResult.Ok(result));
-        _isWorking = false;
-    }
-
-    private void Cancel() => MudDialog.Cancel();
-
-    private readonly AddFamilyMemberViewModel _model = new();
-
-    private bool _isWorking;
-}

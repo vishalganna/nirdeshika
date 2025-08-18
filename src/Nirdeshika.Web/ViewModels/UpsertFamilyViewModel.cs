@@ -2,7 +2,7 @@
 
 namespace Nirdeshika.Web.ViewModels;
 
-public class AddFamilyViewModel
+public class UpsertFamilyViewModel
 {
     [Required(ErrorMessage = "Please enter family head name.")]
     [StringLength(100, ErrorMessage = "Please enter a valid name.")]

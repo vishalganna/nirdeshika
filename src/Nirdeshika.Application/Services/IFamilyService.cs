@@ -3,7 +3,9 @@
 namespace Nirdeshika.Application.Services;
 public interface IFamilyService
 {
-    int? CreateFamilyAsync(CreateFamilyDto family);
+    int? CreateFamily(UpsertFamilyDto family);
     Task<IEnumerable<FamilyDto>> GetAllFamiliesAsync();
     Task<FamilyDto?> GetFamilyById(int id);
+    int UpdateFamilyById(int id, UpsertFamilyDto family);
+
 }
