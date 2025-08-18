@@ -1,0 +1,30 @@
+﻿<MudDialog>
+    <DialogContent>
+        <MudText>@ContentText</MudText>
+        <MudText>Type DELETE in the box below to confirm.</MudText>
+        <MudTextField Variant="Variant.Outlined" Required="true" Immediate="true" T="string"
+                      RequiredError="Please type DELETE to confirm." TextChanged="OnTextChanged" />
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Dialog.Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Error" Variant="Variant.Filled" OnClick="Submit" Disabled="!_canDelete">Delete</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code
+{
+    [CascadingParameter]
+    private IMudDialogInstance Dialog { get; set; } = null!;
+
+    [Parameter]
+    public required string ContentText { get; set; }
+
+    private void Submit() => Dialog.Close(DialogResult.Ok(true));
+
+    private bool _canDelete;
+
+    private void OnTextChanged(string text)
+    {
+        _canDelete = text.Equals("delete", StringComparison.CurrentCultureIgnoreCase);
+    }
+}

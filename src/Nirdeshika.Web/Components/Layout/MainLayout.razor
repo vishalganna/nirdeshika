@@ -1,0 +1,79 @@
+﻿@using Microsoft.AspNetCore.Components.Authorization
+@inherits LayoutComponentBase
+
+<MudThemeProvider />
+<MudPopoverProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+<AuthorizeView Policy="ApprovedOnly">
+    <Authorized>
+        <MudLayout>
+            <MudAppBar Elevation="1" Color="Color.Primary">
+                <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@ToggleDrawer" />
+                Nirdeshika
+                <MudSpacer />
+                Hello, @_userName
+                <MudIconButton Icon="@Icons.Material.Outlined.Logout" Color="Color.Inherit" OnClick="Logout" />
+            </MudAppBar>
+            <MudDrawer @bind-Open="@_open" ClipMode="DrawerClipMode.Always" Elevation="1" Variant="@DrawerVariant.Mini">
+                <MudNavMenu Rounded="true" Margin="Margin.Normal" Color="Color.Primary">
+                    <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Rounded.SpaceDashboard" Href="/">Dashboard</MudNavLink>
+                    @* <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Rounded.PeopleOutline" Href="/families">Families</MudNavLink> *@
+                    <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Rounded.FolderShared" Href="/static-data">Static Data</MudNavLink>
+                </MudNavMenu>
+            </MudDrawer>
+            <MudMainContent Class="pt-16 px-16">
+                <MudContainer Class="mx-0 mt-12" MaxWidth="MaxWidth.False">
+
+                    @Body
+
+                </MudContainer>
+            </MudMainContent>
+        </MudLayout>
+    </Authorized>
+    <NotAuthorized>
+        @if (context.User?.Identity?.IsAuthenticated ?? false)
+        {
+            <NotApproved />
+        }
+        else
+        {
+            <RedirectToLogin />
+        }
+    </NotAuthorized>
+</AuthorizeView>
+
+@code {
+
+    [Inject]
+    public required AuthenticationStateProvider AuthenticationStateProvider { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        _isAuthenticated = user.Identity?.IsAuthenticated ?? false;
+        if (_isAuthenticated)
+        {
+            // Try name first, fallback to email
+            _userName = user.Identity?.Name ?? user.FindFirst(c => c.Type == "name")?.Value;
+        }
+    }
+
+    private void Logout()
+    {
+        NavigationManager.NavigateTo("/logout", true);
+    }
+
+    private void ToggleDrawer()
+    {
+        _open = !_open;
+    }
+
+    private bool _open = true;
+
+    private string? _userName;
+    private bool _isAuthenticated;
+}

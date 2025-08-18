@@ -1,0 +1,6 @@
+﻿CREATE TABLE [dbo].[RelationTypes]
+(
+	[Id] TINYINT NOT NULL PRIMARY KEY IDENTITY, 
+    [Type] NCHAR(10) NOT NULL,
+	[Description] NVARCHAR(100) NOT NULL,
+)

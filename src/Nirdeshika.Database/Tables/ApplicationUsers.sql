@@ -1,0 +1,6 @@
+﻿CREATE TABLE [dbo].[ApplicationUsers]
+(
+	Id INT IDENTITY PRIMARY KEY,
+    Email NVARCHAR(256) NOT NULL UNIQUE,
+    IsApproved BIT NOT NULL DEFAULT 0
+)
