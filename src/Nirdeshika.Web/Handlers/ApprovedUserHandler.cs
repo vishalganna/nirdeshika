@@ -4,10 +4,11 @@ using Nirdeshika.Application.Repositories;
 
 namespace Nirdeshika.Web.Handlers;
 
-public class ApprovedUserRequirement : IAuthorizationRequirement { }
+public class ApprovedUserRequirement : IAuthorizationRequirement;
 
 public class ApprovedUserHandler(
-    IApplicationUserRepository applicationUserRepository
+    IApplicationUserRepository applicationUserRepository,
+    IConfiguration configuration
     ) : AuthorizationHandler<ApprovedUserRequirement>
 {
 
@@ -20,7 +21,8 @@ public class ApprovedUserHandler(
         if (email is not null)
         {
             var user = await applicationUserRepository.GetByEmailAsync(email);
-            if (user is not null && user.IsApproved)
+            var superUser = configuration["SuperUser"] ?? string.Empty;
+            if ((user is not null && user.IsApproved) || superUser.Equals(user?.Email, StringComparison.CurrentCultureIgnoreCase))
             {
                 context.Succeed(requirement);
             }
