@@ -1,12 +1,8 @@
-﻿@using Nirdeshika.Application.DTOs
-@using Nirdeshika.Application.Services
-@using Nirdeshika.Web.ViewModels
-
-<EditForm Model="@_model" OnValidSubmit="OnValidSubmitAsync">
+﻿<EditForm Model="@_model" OnValidSubmit="OnValidSubmit">
     <MudDialog>
-        <TitleContent>
+@*         <TitleContent>
             Add a family
-        </TitleContent>
+        </TitleContent> *@
         <DialogContent>
             <DataAnnotationsValidator />
             <MudGrid>
@@ -65,51 +61,8 @@
             else
             {
                 <MudButton Variant="Variant.Filled" OnClick="Cancel">Cancel</MudButton>
-                <MudButton Variant="Variant.Filled" Color="Color.Success" ButtonType="ButtonType.Submit" StartIcon="@Icons.Material.Rounded.Save">Create</MudButton>
+                <MudButton Variant="Variant.Filled" Color="Color.Success" ButtonType="ButtonType.Submit" StartIcon="@Icons.Material.Rounded.Save">Save</MudButton>
             }
         </DialogActions>
     </MudDialog>
 </EditForm>
-@code {
-    [Parameter]
-    public required IEnumerable<SurnameDto> Surnames { get; set; }
-
-    [Parameter]
-    public required IEnumerable<NativeDto> Natives { get; set; }
-
-    [Parameter]
-    public required IEnumerable<SectDto> Sects { get; set; }
-
-    [Parameter]
-    public required IEnumerable<AddressDto> Addresses { get; set; }
-
-    [CascadingParameter]
-    public required IMudDialogInstance MudDialog { get; set; }
-
-    [Inject]
-    public required IFamilyService FamilyService { get; set; }
-
-    private void OnValidSubmitAsync()
-    {
-        _isWorking = true;
-        var family = new CreateFamilyDto(_model.Head!, _model.SurnameId, _model.NativeId, _model.SectId == 0 ? null : _model.SectId, _model.AddressId);
-        var result = FamilyService.CreateFamilyAsync(family);
-        if (result is not null)
-        {
-            Snackbar.Add("New family added successfully.", Severity.Success);
-        }
-        else
-        {
-            Snackbar.Add("Failed to add new family, please try again.", Severity.Error);
-        }
-
-        MudDialog.Close(DialogResult.Ok(result));
-        _isWorking = false;
-    }
-
-    private void Cancel() => MudDialog.Cancel();
-
-    private readonly AddFamilyViewModel _model = new();
-
-    private bool _isWorking;
-}

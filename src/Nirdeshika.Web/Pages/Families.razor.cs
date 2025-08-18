@@ -41,13 +41,13 @@ public partial class Families
 
         var parameters = new DialogParameters
         {
-            { nameof(AddFamilyDialog.Surnames), _surnames },
-            { nameof(AddFamilyDialog.Natives), _natives },
-            { nameof(AddFamilyDialog.Sects), _sects },
-            { nameof(AddFamilyDialog.Addresses), _addresses }
+            { nameof(UpsertFamilyDialog.Surnames), _surnames },
+            { nameof(UpsertFamilyDialog.Natives), _natives },
+            { nameof(UpsertFamilyDialog.Sects), _sects },
+            { nameof(UpsertFamilyDialog.Addresses), _addresses }
         };
 
-        var dialog = await DialogService.ShowAsync<AddFamilyDialog>("Add a family", parameters, options);
+        var dialog = await DialogService.ShowAsync<UpsertFamilyDialog>("Add a family", parameters, options);
 
         var result = await dialog.Result;
 
@@ -84,6 +84,30 @@ public partial class Families
 
     private void GoToFamily(int id)
         => NavigationManager.NavigateTo($"/families/{id}");
+
+    private async Task UpdateFamilyAsync(FamilyDto family)
+    {
+        var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true };
+
+        var parameters = new DialogParameters
+        {
+            { nameof(UpsertFamilyDialog.Family), family },
+            { nameof(UpsertFamilyDialog.Surnames), _surnames },
+            { nameof(UpsertFamilyDialog.Natives), _natives },
+            { nameof(UpsertFamilyDialog.Sects), _sects },
+            { nameof(UpsertFamilyDialog.Addresses), _addresses }
+        };
+
+        var dialog = await DialogService.ShowAsync<UpsertFamilyDialog>("Update family", parameters, options);
+        var result = await dialog.Result;
+
+        if (!result!.Canceled && result.Data is int id)
+        {
+            _isLoading = true;
+            _families = await FamilyService.GetAllFamiliesAsync();
+            _isLoading = false;
+        }
+    }
 
     private bool _isLoading = true;
     private IEnumerable<SurnameDto> _surnames = [];

@@ -7,5 +7,5 @@ public interface IFamilyMemberRepository
     Task<IEnumerable<FamilyMember>> GetByFamilyId(int familyId);
     Task<int?> AddFamilyMemberAsync(CreateFamilyMemberDto familyMemberDto);
     Task<bool> DeleteAsync(int id);
-
+    int UpdateFamilyMember(int id, CreateFamilyMemberDto familyMember);
 }

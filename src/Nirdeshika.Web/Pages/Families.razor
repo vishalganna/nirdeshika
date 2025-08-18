@@ -15,6 +15,7 @@
                 <TemplateColumn>
                     <CellTemplate>
                         <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Rounded.OpenInNew" Color="@Color.Info" OnClick="() => GoToFamily(context.Item!.Id)" />
+                        <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Rounded.WifiProtectedSetup" Color="@Color.Warning" OnClick="async () => await UpdateFamilyAsync(context.Item!)" />
                     </CellTemplate>
                 </TemplateColumn>
             </Columns>
