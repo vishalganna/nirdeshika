@@ -5,13 +5,13 @@
 
 <MudGrid>
     <MudItem sm="12">
-        <MudDataGrid Items="@_families" Loading="@_isLoading" Striped="true" Bordered="true" Hover="true">
+        <MudDataGrid Items="@_families" Loading="@_isLoading" Striped="true" Bordered="true" Hover="true" FilterCaseSensitivity="DataGridFilterCaseSensitivity.CaseInsensitive">
             <Columns>
-                <PropertyColumn Property="x => x.Id" Title="Family ID"/>
-                <PropertyColumn Property="x => x.Head" Title="Family Head" />
-                <PropertyColumn Property="x => x.Surname!.Name" Title="Surname" />
-                <PropertyColumn Property="x => x.Native!.Name" Title="Native" />
-                <PropertyColumn Property="x => x.Address!.Area" />
+                <PropertyColumn Property="x => x.Id" Title="Family ID" />
+                <PropertyColumn Property="x => x.Head" Title="Family Head" Filterable="true" />
+                <PropertyColumn Property="x => x.Surname!.Name" Title="Surname" Filterable="true" />
+                <PropertyColumn Property="x => x.Native!.Name" Title="Native" Filterable="true" />
+                <PropertyColumn Property="x => x.Address!.Area" Filterable="true" />
                 <TemplateColumn>
                     <CellTemplate>
                         <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Rounded.OpenInNew" Color="@Color.Surface" OnClick="() => GoToFamily(context.Item!.Id)" />
