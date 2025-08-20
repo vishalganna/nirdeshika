@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components;
+using MudBlazor;
 
 namespace Nirdeshika.Web.Components.Layout;
 
@@ -31,6 +32,25 @@ public partial class MainLayout
     {
         _open = !_open;
     }
+
+    private readonly MudTheme _theme = new MudTheme()
+    {
+        Typography = new Typography()
+        {
+            Default = new DefaultTypography
+            {
+                FontFamily = ["Quicksand", "sans-serif"]
+            },
+            Body1 = new Body1Typography()
+            {
+                FontWeight = "500"
+            },
+            Body2 = new Body1Typography()
+            {
+                FontWeight = "500"
+            }
+        }
+    };
 
     private bool _open = true;
 
