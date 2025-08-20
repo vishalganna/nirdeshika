@@ -35,7 +35,7 @@ USING (VALUES
     (31, 'Vidyanaranpuram'),
     (32, 'Vijaynagar'),
     (33, 'Yadavgiri'),
-    (33, 'Hebbal')
+    (34, 'Hebbal')
 ) AS Source ([Id], [Area])
 ON Target.[Id] = Source.[Id]
 WHEN NOT MATCHED BY TARGET THEN
