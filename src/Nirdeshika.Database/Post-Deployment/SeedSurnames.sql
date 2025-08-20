@@ -35,7 +35,7 @@ USING (VALUES
     (31, 'Mutha'),
     (32, 'Nagori'),
     (33, 'Nahar'),
-    (34, 'Nandawat'),
+    (34, 'Nangawat'),
     (35, 'Pichholiya'),
     (36, 'Pitaliya'),
     (37, 'Pokharna'),

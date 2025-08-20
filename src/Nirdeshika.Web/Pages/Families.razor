@@ -1,28 +1,31 @@
-﻿@page "/"
-@page "/families"
+﻿@page "/families"
+@using Nirdeshika.Application.DTOs
 
 <h1>Families</h1>
 
-<MudGrid Class="mt-4">
+<MudGrid>
     <MudItem sm="12">
         <MudDataGrid Items="@_families" Loading="@_isLoading" Striped="true" Bordered="true" Hover="true">
             <Columns>
-                <PropertyColumn Property="x => x.Id" />
-                <PropertyColumn Property="x => x.Head" />
-                <PropertyColumn Property="x => x.Surname!.Name" />
-                <PropertyColumn Property="x => x.Native!.Name" />
+                <PropertyColumn Property="x => x.Id" Title="Family ID"/>
+                <PropertyColumn Property="x => x.Head" Title="Family Head" />
+                <PropertyColumn Property="x => x.Surname!.Name" Title="Surname" />
+                <PropertyColumn Property="x => x.Native!.Name" Title="Native" />
                 <PropertyColumn Property="x => x.Address!.Area" />
                 <TemplateColumn>
                     <CellTemplate>
-                        <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Rounded.OpenInNew" Color="@Color.Info" OnClick="() => GoToFamily(context.Item!.Id)" />
-                        <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Rounded.WifiProtectedSetup" Color="@Color.Warning" OnClick="async () => await UpdateFamilyAsync(context.Item!)" />
+                        <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Rounded.OpenInNew" Color="@Color.Surface" OnClick="() => GoToFamily(context.Item!.Id)" />
+                        <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Rounded.WifiProtectedSetup" Color="@Color.Info" OnClick="async () => await UpdateFamilyAsync(context.Item!)" />
                     </CellTemplate>
                 </TemplateColumn>
             </Columns>
+            <PagerContent>
+                <MudDataGridPager T="FamilyDto" PageSizeSelector="true" PageSizeOptions="[20, 50, 100]" />
+            </PagerContent>
         </MudDataGrid>
     </MudItem>
 </MudGrid>
 
 <div id="add-family-fab">
-    <MudFab Color="Color.Primary" StartIcon="@Icons.Material.Filled.Add" @onclick="OpenAddFamilyDialogAsync" />
+    <MudFab Color="Color.Primary" StartIcon="@Icons.Material.Filled.Add" @onclick="OpenAddFamilyDialogAsync" Size="Size.Small" />
 </div>

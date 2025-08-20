@@ -13,11 +13,11 @@ else
     else
     {
         <MudPaper Elevation="4" Class="pa-6 rounded-lg">
-            <MudButton StartIcon="@Icons.Material.Filled.ArrowBack"
+            <MudButton Size="Size.Small" StartIcon="@Icons.Material.Filled.ArrowBack"
                        Variant="Variant.Filled"
                        Color="@Color.Primary"
                        Class="mb-4"
-                       OnClick="@(() => NavigationManager.NavigateTo("/"))">
+                       OnClick="@(() => NavigationManager.NavigateTo("/families"))">
                 Back to List
             </MudButton>
 
@@ -28,7 +28,7 @@ else
                         @_family.Head[..1].ToUpper()
                     </MudAvatar>
                     <div>
-                        <h2>@_family.Head</h2>
+                        <h2>@_family.Head @_family.Surname?.Name</h2>
                         <div>Family ID: @_family.Id</div>
                     </div>
                 </MudItem>
@@ -81,7 +81,7 @@ else
                             <PropertyColumn Property="x => x.Name" />
                             <PropertyColumn Title="Relation type" Property="x => x.RelationTypeId">
                                 <CellTemplate>
-                                    @_relationTypes.FirstOrDefault(rt => rt.Id == context.Item!.RelationTypeId)?.Type
+                                    @_relationTypes.FirstOrDefault(rt => rt.Id == context.Item!.RelationTypeId)?.Description
                                 </CellTemplate>
                             </PropertyColumn>
                             <PropertyColumn Property="x => x.Relative" />
@@ -89,8 +89,8 @@ else
                             <PropertyColumn Title="Mobile number" Property="x => x.MobileNumber" />
                             <TemplateColumn>
                                 <CellTemplate>
-                                    <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Rounded.WifiProtectedSetup" Color="@Color.Warning" OnClick="async () => await UpdateFamilyMemberAsync(context.Item!)" />
-                                    <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Rounded.DeleteOutline" Color="@Color.Error" OnClick="() => DeleteMemberAsync(context.Item!.Id)"/>
+                                    <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Rounded.WifiProtectedSetup" Color="@Color.Info" OnClick="async () => await UpdateFamilyMemberAsync(context.Item!)" />
+                                    <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Rounded.DeleteOutline" Color="@Color.Error" OnClick="() => DeleteMemberAsync(context.Item!.Id)" />
                                 </CellTemplate>
                             </TemplateColumn>
                         </Columns>
@@ -100,7 +100,7 @@ else
 
             <!-- Footer -->
             <MudCardActions Class="mt-6">
-                <MudButton StartIcon="@Icons.Material.Filled.Add"
+                <MudButton Size="Size.Small" StartIcon="@Icons.Material.Filled.Add"
                            Variant="Variant.Filled"
                            Color="@Color.Tertiary"
                            OnClick="OpenAddFamilyMemberDialogAsync">

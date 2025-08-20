@@ -1,13 +1,10 @@
 ﻿<EditForm Model="@_model" OnValidSubmit="OnValidSubmitAsync">
     <MudDialog>
-        @*<TitleContent>
-            Add a family member
-        </TitleContent>*@
         <DialogContent>
             <DataAnnotationsValidator />
             <MudGrid>
                 <MudItem xs="12">
-                    <MudTextField Label="Name" Variant="Variant.Outlined" @bind-Value="@_model.Name" For="() => _model.Name" />
+                    <MudTextField Label="Name" Variant="Variant.Outlined" @bind-Value="@_model.Name" For="() => _model.Name" Margin="Margin.Dense" />
                 </MudItem>
 
                 <MudItem xs="12">
@@ -17,22 +14,30 @@
                                    DateFormat="dd-MM-yyyy"
                                    Placeholder="Select date of birth"
                                    Variant="Variant.Outlined"
-                                   For="()=> _model.DateOfBirth" />
+                                   For="()=> _model.DateOfBirth"
+                                   Margin="Margin.Dense" />
                 </MudItem>
 
                 <MudItem xs="12">
                     <MudRadioGroup @bind-Value="@_model.Gender" For="() => _model.Gender">
-                        <MudRadio Value="@('M')" Color="Color.Primary">Male</MudRadio>
-                        <MudRadio Value="@('F')" Color="Color.Secondary">Female</MudRadio>
+                        <MudRadio Size="Size.Small" Value="@('M')" Color="Color.Primary" Dense="true">Male</MudRadio>
+                        <MudRadio Size="Size.Small" Value="@('F')" Color="Color.Secondary" Dense="true">Female</MudRadio>
                     </MudRadioGroup>
                 </MudItem>
 
                 <MudItem xs="12">
-                    <MudTextField Label="Mobile number" Variant="Variant.Outlined" @bind-Value="@_model.MobileNumber" For="() => _model.MobileNumber" Mask="@(new PatternMask("0000000000"))" Adornment="Adornment.Start" AdornmentText="+91" />
+                    <MudTextField Label="Mobile number"
+                                  Variant="Variant.Outlined"
+                                  @bind-Value="@_model.MobileNumber"
+                                  For="() => _model.MobileNumber"
+                                  Mask="@(new PatternMask("0000000000"))"
+                                  Adornment="Adornment.Start"
+                                  AdornmentText="+91"
+                                  Margin="Margin.Dense" />
                 </MudItem>
 
                 <MudItem xs="12">
-                    <MudSelect @bind-Value="_model.RelationTypeId" Label="Relation type" Variant="Variant.Outlined" For="() => _model.RelationTypeId" ShrinkLabel>
+                    <MudSelect @bind-Value="_model.RelationTypeId" Label="Relation type" Variant="Variant.Outlined" For="() => _model.RelationTypeId" ShrinkLabel="true" Margin="Margin.Dense">
                         <MudSelectItem Value="@((byte)0)">Select a relation type</MudSelectItem>
                         @foreach (var type in RelationTypes)
                         {
@@ -42,27 +47,27 @@
                 </MudItem>
 
                 <MudItem xs="12">
-                    <MudTextField Label="Relative" Variant="Variant.Outlined" @bind-Value="@_model.Relative" For="() => _model.Relative" />
+                    <MudTextField Label="Relative" Variant="Variant.Outlined" @bind-Value="@_model.Relative" For="() => _model.Relative" Margin="Margin.Dense" />
                 </MudItem>
 
                 <MudItem xs="12">
-
-                    <MudCheckBox @bind-Value="@_model.IsFamilyHead" Label="Is family head" Color="Color.Secondary"></MudCheckBox>
-
+                    <MudSwitch @bind-Value="@_model.IsFamilyHead" Label="Is family head" Color="Color.Primary" />
                 </MudItem>
             </MudGrid>
 
         </DialogContent>
         <DialogActions>
-            @if (_isWorking)
-            {
-                <MudProgressLinear Color="Color.Secondary" Indeterminate="true" Class="my-7" />
-            }
-            else
-            {
-                <MudButton Variant="Variant.Filled" OnClick="Cancel">Cancel</MudButton>
-                <MudButton Variant="Variant.Filled" Color="Color.Success" ButtonType="ButtonType.Submit" StartIcon="@Icons.Material.Rounded.Save">Save</MudButton>
-            }
+            <div class="px-4 mb-4">
+                @if (_isWorking)
+                {
+                    <MudProgressLinear Color="Color.Secondary" Indeterminate="true" Class="my-7" />
+                }
+                else
+                {
+                    <MudButton Size="Size.Small" Variant="Variant.Filled" OnClick="Cancel">Cancel</MudButton>
+                    <MudButton Size="Size.Small" Variant="Variant.Filled" Color="Color.Success" ButtonType="ButtonType.Submit" StartIcon="@Icons.Material.Rounded.Save" Class="ml-2">Save</MudButton>
+                }
+            </div>
         </DialogActions>
     </MudDialog>
 </EditForm>

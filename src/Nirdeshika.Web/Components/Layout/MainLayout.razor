@@ -1,7 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Components.Authorization
 @inherits LayoutComponentBase
 
-<MudThemeProvider />
+<MudThemeProvider Theme="_theme" />
 <MudPopoverProvider />
 <MudDialogProvider />
 <MudSnackbarProvider />
@@ -13,7 +13,7 @@
                 <MudIconButton Icon="@Icons.Material.Rounded.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@ToggleDrawer" />
                 Nirdeshika
                 <MudSpacer />
-               
+
                 <MudMenu>
                     <ActivatorContent>
                         <MudAvatar Variant="Variant.Outlined">
@@ -28,18 +28,16 @@
                 </MudMenu>
 
             </MudAppBar>
-            <MudDrawer @bind-Open="@_open" ClipMode="DrawerClipMode.Always" Elevation="1" Variant="@DrawerVariant.Mini">
+            <MudDrawer @bind-Open="@_open" ClipMode="DrawerClipMode.Docked">
                 <MudNavMenu Rounded="true" Margin="Margin.Normal" Color="Color.Primary">
                     <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Rounded.SpaceDashboard" Href="/">Dashboard</MudNavLink>
-                    @* <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Rounded.PeopleOutline" Href="/families">Families</MudNavLink> *@
+                    <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Rounded.PeopleOutline" Href="/families">Families</MudNavLink>
                     <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Rounded.FolderShared" Href="/static-data">Static Data</MudNavLink>
                 </MudNavMenu>
             </MudDrawer>
-            <MudMainContent Class="pt-16 px-16">
-                <MudContainer Class="mx-0 mt-12" MaxWidth="MaxWidth.False">
-
+            <MudMainContent Class="p-4">
+                <MudContainer Class="mx-0 mt-4" MaxWidth="MaxWidth.False">
                     @Body
-
                 </MudContainer>
             </MudMainContent>
         </MudLayout>
