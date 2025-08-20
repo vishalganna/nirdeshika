@@ -1,17 +1,14 @@
 ﻿<EditForm Model="@_model" OnValidSubmit="OnValidSubmit">
     <MudDialog>
-@*         <TitleContent>
-            Add a family
-        </TitleContent> *@
         <DialogContent>
             <DataAnnotationsValidator />
             <MudGrid>
                 <MudItem xs="12">
-                    <MudTextField Label="Family head" Variant="Variant.Outlined" @bind-Value="@_model.Head" For="() => _model.Head" />
+                    <MudTextField Label="Family head" Variant="Variant.Outlined" @bind-Value="@_model.Head" For="() => _model.Head" Margin="Margin.Dense" />
                 </MudItem>
 
                 <MudItem xs="12">
-                    <MudSelect @bind-Value="_model.SurnameId" Label="Surname" Variant="Variant.Outlined" For="() => _model.SurnameId" ShrinkLabel>
+                    <MudSelect @bind-Value="_model.SurnameId" Label="Surname" Variant="Variant.Outlined" For="() => _model.SurnameId" ShrinkLabel="true" Margin="Margin.Dense">
                         <MudSelectItem Value="0">Select a surname</MudSelectItem>
                         @foreach (var surname in Surnames)
                         {
@@ -21,7 +18,7 @@
                 </MudItem>
 
                 <MudItem xs="12">
-                    <MudSelect @bind-Value="_model.NativeId" Label="Native" Variant="Variant.Outlined" For="() => _model.NativeId" ShrinkLabel>
+                    <MudSelect @bind-Value="_model.NativeId" Label="Native" Variant="Variant.Outlined" For="() => _model.NativeId" ShrinkLabel="true" Margin="Margin.Dense">
                         <MudSelectItem Value="0">Select a native</MudSelectItem>
                         @foreach (var native in Natives)
                         {
@@ -31,7 +28,7 @@
                 </MudItem>
 
                 <MudItem xs="12">
-                    <MudSelect @bind-Value="_model.AddressId" Label="Area" Variant="Variant.Outlined" For="() => _model.AddressId" ShrinkLabel>
+                    <MudSelect @bind-Value="_model.AddressId" Label="Area" Variant="Variant.Outlined" For="() => _model.AddressId" ShrinkLabel="true" Margin="Margin.Dense">
                         <MudSelectItem Value="0">Select an area</MudSelectItem>
                         @foreach (var address in Addresses)
                         {
@@ -41,7 +38,7 @@
                 </MudItem>
 
                 <MudItem xs="12">
-                    <MudSelect @bind-Value="_model.SectId" Label="Sect" Variant="Variant.Outlined" For="() => _model.SectId" ShrinkLabel>
+                    <MudSelect @bind-Value="_model.SectId" Label="Sect" Variant="Variant.Outlined" For="() => _model.SectId" ShrinkLabel="true" Margin="Margin.Dense">
                         <MudSelectItem Value="0">Select a sect</MudSelectItem>
                         @foreach (var sect in Sects)
                         {
@@ -54,15 +51,17 @@
 
         </DialogContent>
         <DialogActions>
+            <div class="px-4 mb-4">
             @if (_isWorking)
             {
-                <MudProgressLinear Color="Color.Secondary" Indeterminate="true" Class="my-7" />
+                <MudProgressLinear Color="Color.Secondary" Indeterminate="true" Class="my-7"/>
             }
             else
             {
-                <MudButton Variant="Variant.Filled" OnClick="Cancel">Cancel</MudButton>
-                <MudButton Variant="Variant.Filled" Color="Color.Success" ButtonType="ButtonType.Submit" StartIcon="@Icons.Material.Rounded.Save">Save</MudButton>
+                <MudButton Size="Size.Small" Variant="Variant.Filled" OnClick="Cancel">Cancel</MudButton>
+                <MudButton Size="Size.Small" Variant="Variant.Filled" Color="Color.Success" ButtonType="ButtonType.Submit" StartIcon="@Icons.Material.Rounded.Save" Class="ml-2">Save</MudButton>
             }
+            </div>
         </DialogActions>
     </MudDialog>
 </EditForm>
