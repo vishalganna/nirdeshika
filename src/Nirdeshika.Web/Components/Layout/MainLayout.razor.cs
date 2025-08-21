@@ -39,15 +39,7 @@ public partial class MainLayout
         {
             Default = new DefaultTypography
             {
-                FontFamily = ["Quicksand", "sans-serif"]
-            },
-            Body1 = new Body1Typography()
-            {
-                FontWeight = "500"
-            },
-            Body2 = new Body1Typography()
-            {
-                FontWeight = "500"
+                FontFamily = ["Nunito", "Helvetica", "sans-serif"]
             }
         }
     };
