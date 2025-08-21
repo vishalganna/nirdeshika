@@ -1,4 +1,5 @@
 ﻿@page "/families/{FamilyId:int}"
+@using Nirdeshika.Domain.Extensions
 
 @if (_isLoading)
 {
@@ -12,7 +13,7 @@ else
     }
     else
     {
-        <MudPaper Elevation="4" Class="pa-6 rounded-lg">
+        <MudPaper Elevation="4" Class="my-1 pa-6 rounded-lg">
             <MudButton Size="Size.Small" StartIcon="@Icons.Material.Filled.ArrowBack"
                        Variant="Variant.Filled"
                        Color="@Color.Primary"
@@ -22,7 +23,7 @@ else
             </MudButton>
 
             <MudGrid>
-                <MudItem xs="12" sm="4" Class="d-flex gap-x-8">
+                <MudItem xs="12" sm="6" Class="d-flex gap-x-8">
                     <MudAvatar Size="Size.Large"
                                Color="Color.Secondary">
                         @_family.Head[..1].ToUpper()
@@ -32,7 +33,7 @@ else
                         <div>Family ID: @_family.Id</div>
                     </div>
                 </MudItem>
-                <MudItem xs="12" sm="4" Class="d-flex gap-x-8">
+                <MudItem xs="12" sm="6" Class="d-flex gap-x-8">
                     <MudAvatar Color="Color.Info" Variant="Variant.Filled" Size="Size.Large">
                         <MudIcon Icon="@Icons.Material.Rounded.Place" />
                     </MudAvatar>
@@ -41,14 +42,14 @@ else
                         <div>@_family.Native?.Name</div>
                     </div>
                 </MudItem>
-                <MudItem xs="12" sm="4" Class="d-flex gap-x-8">
+                @*  <MudItem xs="12" sm="4" Class="d-flex gap-x-8">
                     <MudAvatar Color="Color.Tertiary" Variant="Variant.Filled" Size="Size.Large">
                         <MudIcon Icon="@Icons.Material.Rounded.CallSplit" />
                     </MudAvatar>
                     <div>
                         <h2>@_family.Sect?.Name</h2>
                     </div>
-                </MudItem>
+                </MudItem> *@
             </MudGrid>
 
             <MudItem sm="12" Class="mt-8">
@@ -86,6 +87,11 @@ else
                             </PropertyColumn>
                             <PropertyColumn Property="x => x.Relative" />
                             <PropertyColumn Title="Date of birth" Property="x => x.DateOfBirth" Format="dd-MM-yyyy" />
+                            <TemplateColumn Title="Age (Years)">
+                                <CellTemplate>
+                                    <MudText> @context.Item!.DateOfBirth.CalculateAge()</MudText>
+                                </CellTemplate>
+                            </TemplateColumn>
                             <PropertyColumn Title="Mobile number" Property="x => x.MobileNumber" />
                             <TemplateColumn>
                                 <CellTemplate>

@@ -8,7 +8,7 @@
 
 <h1>Static Data</h1>
 
-<MudGrid>
+<MudGrid Class="my-1">
     <MudItem sm="12" md="6">
         <MudDataGrid Items="@_surnames" Loading="@_isLoading" Striped="true" Bordered="true" Hover="true">
             <ToolBarContent>
@@ -55,7 +55,7 @@
                 <MudDataGridPager T="NativeDto" />
             </PagerContent>
         </MudDataGrid>
-        
+
         <MudDataGrid Items="@_sects" Loading="@_isLoading" Striped="true" Bordered="true" Hover="true" Class="my-8">
             <ToolBarContent>
                 <MudText Typo="Typo.h5">Sects</MudText>
