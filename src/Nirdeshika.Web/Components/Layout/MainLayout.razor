@@ -1,5 +1,4 @@
-﻿@using Microsoft.AspNetCore.Components.Authorization
-@inherits LayoutComponentBase
+﻿@inherits LayoutComponentBase
 
 <MudThemeProvider Theme="_theme" />
 <MudPopoverProvider />
@@ -30,9 +29,14 @@
             </MudAppBar>
             <MudDrawer @bind-Open="@_open" ClipMode="DrawerClipMode.Docked">
                 <MudNavMenu Rounded="true" Margin="Margin.Normal" Color="Color.Primary">
-                    <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Rounded.SpaceDashboard" Href="/">Dashboard</MudNavLink>
-                    <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Rounded.PeopleOutline" Href="/families">Families</MudNavLink>
+                    @* <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Rounded.SpaceDashboard" Href="/">Dashboard</MudNavLink> *@
+                    <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Rounded.PeopleOutline" Href="/">Families</MudNavLink>
                     <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Rounded.FolderShared" Href="/static-data">Static Data</MudNavLink>
+                    <AuthorizeView Policy="AdminOnly" Context="admin">
+                        <Authorized>
+                            <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Rounded.AdminPanelSettings" Href="/manage-users">Manage Users</MudNavLink>
+                        </Authorized>
+                    </AuthorizeView>
                 </MudNavMenu>
             </MudDrawer>
             <MudMainContent Class="p-4">

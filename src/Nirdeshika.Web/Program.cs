@@ -16,7 +16,10 @@ builder.Services
     .AddInteractiveServerComponents()
     ;
 
-builder.Services.AddScoped<IAuthorizationHandler, ApprovedUserHandler>();
+builder.Services
+    .AddScoped<IAuthorizationHandler, ApprovedUserHandler>()
+    .AddScoped<IAuthorizationHandler, AdminOnlyHandler>()
+    ;
 
 builder.Services.AddCascadingAuthenticationState();
 
@@ -28,6 +31,8 @@ builder.Services
         {
             options.AddPolicy("ApprovedOnly", policy =>
                 policy.Requirements.Add(new ApprovedUserRequirement()));
+            options.AddPolicy("AdminOnly", policy =>
+                policy.Requirements.Add(new AdminUserRequirement()));
         })
     .AddAuthentication(options =>
         {

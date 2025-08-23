@@ -100,8 +100,7 @@ public partial class Families
 
         var dialog = await DialogService.ShowAsync<UpsertFamilyDialog>("Update family", parameters, options);
         var result = await dialog.Result;
-
-        if (!result!.Canceled && result.Data is int id)
+        if (!result!.Canceled && result.Data is int)
         {
             _isLoading = true;
             _families = await FamilyService.GetAllFamiliesAsync();
