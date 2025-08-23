@@ -95,8 +95,12 @@ else
                             <PropertyColumn Title="Mobile number" Property="x => x.MobileNumber" />
                             <TemplateColumn>
                                 <CellTemplate>
-                                    <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Rounded.WifiProtectedSetup" Color="@Color.Info" OnClick="async () => await UpdateFamilyMemberAsync(context.Item!)" />
-                                    <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Rounded.DeleteOutline" Color="@Color.Error" OnClick="() => DeleteMemberAsync(context.Item!.Id)" />
+                                    <AuthorizeView Policy="AdminOnly" Context="admin">
+                                        <Authorized>
+                                            <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Rounded.WifiProtectedSetup" Color="@Color.Info" OnClick="async () => await UpdateFamilyMemberAsync(context.Item!)" />
+                                            <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Rounded.DeleteOutline" Color="@Color.Error" OnClick="() => DeleteMemberAsync(context.Item!.Id)" />
+                                        </Authorized>
+                                    </AuthorizeView>
                                 </CellTemplate>
                             </TemplateColumn>
                         </Columns>
@@ -104,15 +108,18 @@ else
                 }
             </MudItem>
 
-            <!-- Footer -->
-            <MudCardActions Class="mt-6">
-                <MudButton Size="Size.Small" StartIcon="@Icons.Material.Filled.Add"
-                           Variant="Variant.Filled"
-                           Color="@Color.Tertiary"
-                           OnClick="OpenAddFamilyMemberDialogAsync">
-                    Add member
-                </MudButton>
-            </MudCardActions>
+            <AuthorizeView Policy="AdminOnly" Context="admin">
+                <Authorized>
+                    <MudCardActions Class="mt-6">
+                        <MudButton Size="Size.Small" StartIcon="@Icons.Material.Filled.Add"
+                                   Variant="Variant.Filled"
+                                   Color="@Color.Tertiary"
+                                   OnClick="OpenAddFamilyMemberDialogAsync">
+                            Add member
+                        </MudButton>
+                    </MudCardActions>
+                </Authorized>
+            </AuthorizeView>
         </MudPaper>
     }
 }

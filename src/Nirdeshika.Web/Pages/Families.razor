@@ -1,4 +1,5 @@
-﻿@page "/families"
+﻿@page "/"
+@page "/families"
 @using Nirdeshika.Application.DTOs
 
 <h1>Families</h1>
@@ -12,12 +13,18 @@
                 <PropertyColumn Property="x => x.Surname!.Name" Title="Surname" Filterable="true" />
                 <PropertyColumn Property="x => x.Native!.Name" Title="Native" Filterable="true" />
                 <PropertyColumn Property="x => x.Address!.Area" Filterable="true" />
+
                 <TemplateColumn>
                     <CellTemplate>
+                        <AuthorizeView Policy="AdminOnly" Context="admin">
+                            <Authorized>
+                                <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Rounded.WifiProtectedSetup" Color="@Color.Info" OnClick="async () => await UpdateFamilyAsync(context.Item!)" />
+                            </Authorized>
+                        </AuthorizeView>
                         <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Rounded.OpenInNew" Color="@Color.Surface" OnClick="() => GoToFamily(context.Item!.Id)" />
-                        <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Rounded.WifiProtectedSetup" Color="@Color.Info" OnClick="async () => await UpdateFamilyAsync(context.Item!)" />
                     </CellTemplate>
                 </TemplateColumn>
+
             </Columns>
             <PagerContent>
                 <MudDataGridPager T="FamilyDto" PageSizeSelector="true" PageSizeOptions="[20, 50, 100]" />

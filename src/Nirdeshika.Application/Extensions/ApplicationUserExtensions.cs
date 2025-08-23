@@ -5,7 +5,7 @@ namespace Nirdeshika.Application.Extensions;
 public static class ApplicationUserExtensions
 {
     public static ApplicationUserDto ToDto(this ApplicationUser source)
-        => new(source.Id, source.Email, source.IsApproved);
+        => new(source.Id, source.Email, source.IsApproved, source.IsAdmin);
 
     public static IEnumerable<ApplicationUserDto> ToDto(this IEnumerable<ApplicationUser> source)
         => source.Select(ToDto);
