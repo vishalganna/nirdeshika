@@ -1,0 +1,67 @@
+﻿@page "/manage-users"
+@using Nirdeshika.Application.DTOs
+
+<AuthorizeView Policy="AdminOnly" Context="admin">
+    <Authorized>
+        <MudGrid Class="my-1">
+            <MudItem xs="12">
+                <MudDataGrid Items="@_users" Loading="@_isLoading" Striped="true" Bordered="true" Hover="true">
+                    <ToolBarContent>
+                        <MudText Typo="Typo.h5">Surnames</MudText>
+                        <MudSpacer />
+                    </ToolBarContent>
+                    <Columns>
+                        <PropertyColumn Property="x => x.Id" />
+                        <PropertyColumn Property="x => x.Email" />
+
+                        <TemplateColumn Title="Status">
+                            <CellTemplate>
+                                @if (context.Item.IsApproved)
+                                {
+                                    <MudChip Color="Color.Success" Variant="Variant.Filled" Size="Size.Small">Approved</MudChip>
+                                }
+                                else
+                                {
+                                    <MudChip Color="Color.Warning" Variant="Variant.Filled" Size="Size.Small">Not approved</MudChip>
+                                }
+                            </CellTemplate>
+                        </TemplateColumn>
+                        <TemplateColumn Title="Action">
+                            <CellTemplate>
+                                @if (!context.Item!.IsApproved)
+                                {
+                                    <MudButton Variant="Variant.Filled"
+                                               Size="Size.Small"
+                                               Color="Color.Primary"
+                                               StartIcon="@Icons.Material.Rounded.Check"
+                                               OnClick="() => OnApprovalChangedAsync(context.Item.Id)">
+                                        Approve
+                                    </MudButton>
+                                }
+                                else
+                                {
+                                    <MudButton Variant="Variant.Filled"
+                                               Size="Size.Small"
+                                               Color="Color.Error"
+                                               StartIcon="@Icons.Material.Rounded.Close"
+                                               OnClick="() => OnApprovalChangedAsync(context.Item.Id)">
+                                        Disapprove
+                                    </MudButton>
+                                }
+
+                            </CellTemplate>
+                        </TemplateColumn>
+                    </Columns>
+
+                    <PagerContent>
+                        <MudDataGridPager T="ApplicationUserDto" />
+                    </PagerContent>
+                </MudDataGrid>
+
+            </MudItem>
+        </MudGrid>
+    </Authorized>
+    <NotAuthorized>
+        <MudPaper Class="pa-4 ma-2" Outlined="true"><h3>Sorry, you are not authorized to view this page.</h3></MudPaper>
+    </NotAuthorized>
+</AuthorizeView>
