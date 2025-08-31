@@ -18,10 +18,10 @@
                         </ToolBarContent>
                         <Columns>
                             <PropertyColumn Property="x => x.Id" />
-                            <PropertyColumn Property="x => x.Email" />
-
-                            <TemplateColumn Title="Status">
+                            <TemplateColumn Title="Username (Email)">
                                 <CellTemplate>
+                                    @context.Item.Email
+
                                     @if (context.Item.IsApproved)
                                     {
                                         <MudChip Color="Color.Success" Variant="Variant.Filled" Size="Size.Small">Approved</MudChip>
@@ -34,27 +34,12 @@
                             </TemplateColumn>
                             <TemplateColumn Title="Action">
                                 <CellTemplate>
-                                    @if (!context.Item!.IsApproved)
-                                    {
-                                        <MudButton Variant="Variant.Filled"
-                                                   Size="Size.Small"
-                                                   Color="Color.Primary"
-                                                   StartIcon="@Icons.Material.Rounded.Check"
-                                                   OnClick="() => OnApprovalChangedAsync(context.Item.Id)">
-                                            Approve
-                                        </MudButton>
-                                    }
-                                    else
-                                    {
-                                        <MudButton Variant="Variant.Filled"
-                                                   Size="Size.Small"
-                                                   Color="Color.Error"
-                                                   StartIcon="@Icons.Material.Rounded.Close"
-                                                   OnClick="() => OnApprovalChangedAsync(context.Item.Id)">
-                                            Disapprove
-                                        </MudButton>
-                                    }
-
+                                    <MudTooltip Text="@(context.Item.IsApproved ? "Disprove" : "Approve")">
+                                        <MudIconButton Icon="@(context.Item.IsApproved ? Icons.Material.Rounded.DoDisturb : Icons.Material.Rounded.CheckCircleOutline)" Color="@(context.Item.IsApproved ? Color.Error : Color.Success)" OnClick="() => OnApprovalChangedAsync(context.Item.Id)" />
+                                    </MudTooltip>
+                                    <MudTooltip Text="@(context.Item.IsAdmin!.Value ? "Remove admin" : "Make admin")">
+                                        <MudIconButton Icon="@Icons.Material.Rounded.AdminPanelSettings" Color="@(context.Item.IsAdmin!.Value ? Color.Primary : Color.Default)" Class="ml-2" OnClick="() => OnAdminStatusChangedAsync(context.Item)" />
+                                    </MudTooltip>
                                 </CellTemplate>
                             </TemplateColumn>
                         </Columns>

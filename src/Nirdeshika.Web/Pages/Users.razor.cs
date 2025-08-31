@@ -11,6 +11,8 @@ public partial class Users
     public required IApplicationUserService ApplicationUserService { get; set; }
     [Inject]
     public required AuthenticationStateProvider AuthenticationStateProvider { get; set; }
+    [Inject]
+    public required IConfiguration Configuration { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -35,12 +37,28 @@ public partial class Users
         _isLoading = false;
     }
 
+    private async Task OnAdminStatusChangedAsync(ApplicationUserDto user)
+    {
+        var result = await DialogService.ShowMessageBox(
+            "Warning",
+            $"Are you sure want to update the admin status of {user.Email}?",
+            yesText: "Yes", cancelText: "No");
+        if (result.HasValue && result.Value)
+        {
+            _isLoading = true;
+            await ApplicationUserService.ToggleAdminStatusAsync(user.Id);
+            await LoadUsersAsync();
+            _isLoading = false;
+        }
+    }
+
     private async Task LoadUsersAsync()
     {
         _users = await ApplicationUserService.GetAllAsync();
+        var superUser = Configuration["SuperUser"] ?? string.Empty;
         if (_user is not null)
         {
-            _users = _users.Where(u => u.Email != _user);
+            _users = _users.Where(u => u.Email != _user && u.Email != superUser);
         }
     }
 

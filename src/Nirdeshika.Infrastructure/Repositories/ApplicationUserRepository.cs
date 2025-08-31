@@ -69,4 +69,18 @@ public class ApplicationUserRepository(
             logger.LogError(ex, "Error while connecting to the database: {Message}", ex.Message);
         }
     }
+
+    public async Task ToggleAdminStatusAsync(int id)
+    {
+        try
+        {
+            using var connection = connectionFactory.CreateConnection();
+            const string sql = "UPDATE ApplicationUsers SET IsAdmin = ~IsAdmin WHERE Id = @Id";
+            await connection.ExecuteAsync(sql, new { Id = id });
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Error while connecting to the database: {Message}", ex.Message);
+        }
+    }
 }
