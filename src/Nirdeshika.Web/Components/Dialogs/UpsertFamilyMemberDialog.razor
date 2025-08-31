@@ -32,7 +32,8 @@
                                   For="() => _model.MobileNumber"
                                   Adornment="Adornment.Start"
                                   AdornmentText="+91"
-                                  Margin="Margin.Dense" />
+                                  Margin="Margin.Dense"
+                                  MaxLength="10" />
                 </MudItem>
 
                 <MudItem xs="12">
@@ -40,7 +41,7 @@
                         <MudSelectItem Value="@((byte)0)">Select a relation type</MudSelectItem>
                         @foreach (var type in RelationTypes)
                         {
-                            <MudSelectItem Value="@type.Id">@type.Type</MudSelectItem>
+                            <MudSelectItem Value="@type.Id">@type.Description</MudSelectItem>
                         }
                     </MudSelect>
                 </MudItem>

@@ -18,10 +18,14 @@
                     <CellTemplate>
                         <AuthorizeView Policy="AdminOnly" Context="admin">
                             <Authorized>
-                                <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Rounded.WifiProtectedSetup" Color="@Color.Info" OnClick="async () => await UpdateFamilyAsync(context.Item!)" />
+                                <MudTooltip Text="Update family info">
+                                    <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Rounded.WifiProtectedSetup" Color="@Color.Warning" OnClick="async () => await UpdateFamilyAsync(context.Item!)" />
+                                </MudTooltip>
                             </Authorized>
                         </AuthorizeView>
-                        <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Rounded.OpenInNew" Color="@Color.Surface" OnClick="() => GoToFamily(context.Item!.Id)" />
+                        <MudTooltip Text="Go to family page">
+                            <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Rounded.ArrowCircleRight" Color="@Color.Info" OnClick="() => GoToFamily(context.Item!.Id)" />
+                        </MudTooltip>
                     </CellTemplate>
                 </TemplateColumn>
 

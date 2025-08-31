@@ -10,7 +10,7 @@ public class ApplicationUserService(IApplicationUserRepository applicationUserRe
     {
         var user = await applicationUserRepository.GetByEmailAsync(email);
         return user?.ToDto();
-    } 
+    }
 
     public async Task AddUserAsync(string email)
         => await applicationUserRepository.AddUserAsync(email);
@@ -23,4 +23,7 @@ public class ApplicationUserService(IApplicationUserRepository applicationUserRe
 
     public async Task ToggleApprovalAsync(int id)
         => await applicationUserRepository.ToggleApprovalAsync(id);
+
+    public async Task ToggleAdminStatusAsync(int id)
+        => await applicationUserRepository.ToggleAdminStatusAsync(id);
 }
