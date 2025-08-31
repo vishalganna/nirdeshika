@@ -7,4 +7,5 @@ public interface IApplicationUserRepository
     Task AddUserAsync(string email);
     Task<IEnumerable<ApplicationUser>> GetAllAsync();
     Task ToggleApprovalAsync(int id);
+    Task ToggleAdminStatusAsync(int id);
 }
