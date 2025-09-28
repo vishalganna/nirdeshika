@@ -13,12 +13,14 @@ public partial class Dashboard
 
     private async Task GeneratePdf()
     {
+        _processing = true;
         var pdfBytes = await PdfService.CreateFamilyDataPdfAsync(
             new Tuple<bool, int, int>(_includeMales, _maleMinAge, _maleMaxAge),
             new Tuple<bool, int, int>(_includeFemales, _femaleMinAge, _femaleMaxAge));
         var base64 = Convert.ToBase64String(pdfBytes);
 
         await JsRuntime.InvokeVoidAsync("downloadFile", "FamilyData.pdf", base64);
+        _processing = false;
     }
     private readonly List<int> _ageRange = Enumerable.Range(15, 90).ToList();
 
@@ -28,4 +30,6 @@ public partial class Dashboard
     private bool _includeFemales = true;
     private int _femaleMinAge = 18;
     private int _femaleMaxAge = 40;
+
+    private bool _processing = false;
 }
