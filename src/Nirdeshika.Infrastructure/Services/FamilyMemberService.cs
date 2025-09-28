@@ -10,7 +10,7 @@ public class FamilyMemberService(
 {
     public async Task<IEnumerable<FamilyMemberDto>> GetByFamilyIdAsync(int familyId)
     {
-        var result = await familyMemberRepository.GetByFamilyId(familyId);
+        var result = await familyMemberRepository.GetByFamilyIdAsync(familyId);
         return result.ToDto();
     }
 

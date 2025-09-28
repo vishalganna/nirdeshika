@@ -29,8 +29,8 @@
             </MudAppBar>
             <MudDrawer @bind-Open="@_open" Variant="DrawerVariant.Persistent" Color="Color.Primary" ClipMode="DrawerClipMode.Always" Elevation="1">
                 <MudNavMenu Margin="Margin.Normal" Bordered="true" Color="Color.Inherit">
-                    @* <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Rounded.SpaceDashboard" Href="/">Dashboard</MudNavLink> *@
-                    <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Rounded.PeopleOutline" IconColor="Color.Inherit" Href="/">Families</MudNavLink>
+                    <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Rounded.SpaceDashboard" IconColor="Color.Inherit" Href="/">Dashboard</MudNavLink>
+                    <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Rounded.PeopleOutline" IconColor="Color.Inherit" Href="/families">Families</MudNavLink>
                     <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Rounded.FolderShared" IconColor="Color.Inherit" Href="/static-data">Static Data</MudNavLink>
                     <AuthorizeView Policy="AdminOnly" Context="admin">
                         <Authorized>

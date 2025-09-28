@@ -1,8 +1,82 @@
-﻿@* @page "/"
+﻿@page "/"
 
 <MudGrid Class="my-2">
     <MudItem xs="12" sm="6" md="4">
-        <MudPaper Elevation="2" Class="pa-4" Style="height: 200px;"></MudPaper>
+
+        <MudPaper Elevation="2" Class="pa-4" Style="height: 200px;">
+            <MudText HtmlTag="h2" Class="mb-4">Download family data</MudText>
+            <MudGrid Spacing="4">
+                <MudItem xs="6">
+                    <MudCheckBox @bind-Value="_includeMales" Color="Color.Primary">Males</MudCheckBox>
+                </MudItem>
+                <MudItem xs="3">
+                    <MudSelect @bind-Value="_maleMinAge"
+                               Label="Min Age"
+                               Variant="Variant.Outlined"
+                               ShrinkLabel="true"
+                               Margin="Margin.Dense"
+                               Disabled="!_includeMales">
+                        @foreach (var age in _ageRange)
+                        {
+                            <MudSelectItem Value="@age">@age</MudSelectItem>
+                        }
+                    </MudSelect>
+                </MudItem>
+                <MudItem xs="3">
+                    <MudSelect @bind-Value="_maleMaxAge"
+                               Label="Max Age"
+                               Variant="Variant.Outlined"
+                               ShrinkLabel="true"
+                               Margin="Margin.Dense"
+                               Disabled="!_includeMales">
+                        @foreach (var age in _ageRange)
+                        {
+                            <MudSelectItem Value="@age">@age</MudSelectItem>
+                        }
+                    </MudSelect>
+                </MudItem>
+            </MudGrid>
+
+            <MudGrid Spacing="4">
+                <MudItem xs="6">
+                    <MudCheckBox @bind-Value="_includeFemales" Color="Color.Secondary">Females</MudCheckBox>
+                </MudItem>
+                <MudItem xs="3">
+                    <MudSelect @bind-Value="_femaleMinAge"
+                               Label="Min Age"
+                               Variant="Variant.Outlined"
+                               ShrinkLabel="true"
+                               Margin="Margin.Dense"
+                               Disabled="!_includeFemales">
+                        @foreach (var age in _ageRange)
+                        {
+                            <MudSelectItem Value="@age">@age</MudSelectItem>
+                        }
+                    </MudSelect>
+                </MudItem>
+                <MudItem xs="3">
+                    <MudSelect @bind-Value="_femaleMaxAge"
+                               Label="Max Age"
+                               Variant="Variant.Outlined"
+                               ShrinkLabel="true"
+                               Margin="Margin.Dense"
+                               Disabled="!_includeFemales">
+                        @foreach (var age in _ageRange)
+                        {
+                            <MudSelectItem Value="@age">@age</MudSelectItem>
+                        }
+                    </MudSelect>
+                </MudItem>
+            </MudGrid>
+
+            <MudButton Size="Size.Small" StartIcon="@Icons.Material.Filled.Download"
+                       Variant="Variant.Filled"
+                       Color="@Color.Dark"
+                       Class="mb-4"
+                       OnClick="GeneratePdf">
+                Download
+            </MudButton>
+        </MudPaper>
     </MudItem>
     <MudItem xs="12" sm="6" md="4">
         <MudPaper Elevation="2" Class="pa-4" Style="height: 200px;"></MudPaper>
@@ -11,8 +85,4 @@
         <MudPaper Elevation="2" Class="pa-4" Style="height: 200px;"></MudPaper>
     </MudItem>
 
-    <MudItem sm="12">
-        <MudPaper Elevation="2" Class="pa-4" Style="height: 100%"></MudPaper>
-    </MudItem>
-
-</MudGrid> *@
+</MudGrid>
