@@ -7,6 +7,10 @@ using Nirdeshika.Application.Services;
 using Nirdeshika.Infrastructure;
 using Nirdeshika.Web.Components;
 using Nirdeshika.Web.Handlers;
+using Nirdeshika.Web.Services;
+using QuestPDF.Infrastructure;
+
+QuestPDF.Settings.License = LicenseType.Community;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +24,9 @@ builder.Services
     .AddScoped<IAuthorizationHandler, ApprovedUserHandler>()
     .AddScoped<IAuthorizationHandler, AdminOnlyHandler>()
     ;
+
+builder.Services
+    .AddScoped<QuestPdfService>();
 
 builder.Services.AddCascadingAuthenticationState();
 

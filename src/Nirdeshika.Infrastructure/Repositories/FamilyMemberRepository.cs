@@ -12,7 +12,7 @@ public class FamilyMemberRepository(
     ILogger<FamilyMemberRepository> logger
     ) : IFamilyMemberRepository
 {
-    public async Task<IEnumerable<FamilyMember>> GetByFamilyId(int familyId)
+    public async Task<IEnumerable<FamilyMember>> GetByFamilyIdAsync(int familyId)
     {
         try
         {
