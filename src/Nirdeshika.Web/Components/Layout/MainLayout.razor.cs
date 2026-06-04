@@ -39,7 +39,7 @@ public partial class MainLayout
         {
             Default = new DefaultTypography
             {
-                FontFamily = ["Nunito", "Helvetica", "sans-serif"]
+                FontFamily = ["Google Sans", "Helvetica", "sans-serif"]
             }
         }
     };
