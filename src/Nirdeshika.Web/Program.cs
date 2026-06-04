@@ -33,7 +33,6 @@ builder.Services.AddCascadingAuthenticationState();
 builder.Services
     .AddInfrastructure()
     .AddMudServices()
-    .AddApplicationInsightsTelemetry()
     .AddAuthorization(options =>
         {
             options.AddPolicy("ApprovedOnly", policy =>
