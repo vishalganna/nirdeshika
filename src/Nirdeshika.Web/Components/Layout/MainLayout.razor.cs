@@ -39,7 +39,8 @@ public partial class MainLayout
         {
             Default = new DefaultTypography
             {
-                FontFamily = ["Google Sans", "Helvetica", "sans-serif"]
+                FontFamily = ["Google Sans", "Helvetica", "sans-serif"],
+                FontSize = "1rem",
             }
         }
     };
